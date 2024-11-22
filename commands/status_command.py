@@ -1,4 +1,16 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
+from attack_status import ATTACK_STATUS
+from tabulate import tabulate
+from termcolor import colored
+
 def status_command(params): 
-    print('Status : Attaque en cours')
-    print('Victimes : 192.168.1.5')
-    print('DNS: 192.168.0.1')
+
+    data = [
+        [colored("En cours", "green") if ATTACK_STATUS['status'] == 1 else colored("Arrêtée", "red"), ATTACK_STATUS['dns'], ATTACK_STATUS['victims']]
+    ]
+
+    headers = ["Status de l'attaque", "Serveurs DNS à usurper", "IP / Subnet victime"]
+
+    print(tabulate(data, headers, tablefmt="grid"))
