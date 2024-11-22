@@ -5,6 +5,9 @@ def help_command(params):
     data = [
         ["help", "Affiche les commandes disponibles"],
         ["status", "Affiche le status de l'attaque en cours"],
+        ["set_dns [dns_ip]", "Configure l'IP des serveurs DNS"],
+        ["set_victims [victims_ip/subnet]", "Configure l'IP / subnet de la victime"],
+        ["set_iface [interface]", "Configure l'interface d'attaque"],
         ["list", "Affiche la liste des sites usurpés"],
         ["add_site [domain(s)] [archive]", "Ajouter un site internet à usurper"],
         ["rem_site [domain(s)] [archive]", "Supprimer un site internet à usurper"],

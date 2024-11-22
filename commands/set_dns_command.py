@@ -3,9 +3,10 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
 from attack_status import ATTACK_STATUS
 
-def stop_command(params):
+def set_dns_command(params):
 
-	if ATTACK_STATUS['status'] == 1:
-		sys.exit()
-	else:
-		print("Attaque inactive")
+	if len(params) != 1:
+		print("Erreur d'usage. Tapez help pour de l'aide")
+		return
+
+	ATTACK_STATUS['dns'] = params[0]

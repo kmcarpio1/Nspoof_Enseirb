@@ -7,6 +7,11 @@ from commands.help_command import help_command
 from commands.exit_command import exit_command
 from commands.start_command import start_command
 from commands.stop_command import stop_command
+from commands.show_creds_command import show_creds_command
+from commands.set_dns_command import set_dns_command
+from commands.set_victims_command import set_victims_command
+from commands.set_iface_command import set_iface_command
+from corethreads.arp import arp
 
 COMMANDS = {}
 
@@ -17,6 +22,10 @@ def register_commands():
     COMMANDS['exit'] = exit_command
     COMMANDS['start'] = start_command
     COMMANDS['stop'] = stop_command
+    COMMANDS['set_dns'] = set_dns_command
+    COMMANDS['set_victims'] = set_victims_command
+    COMMANDS['set_iface'] = set_iface_command
+    COMMANDS['show_creds'] = show_creds_command
 
 def interactive_shell():
     while True:
@@ -32,8 +41,7 @@ def interactive_shell():
             params = parts[1:]
 
             if command in COMMANDS:
-                result = COMMANDS[command](params)
-                print(result)
+                COMMANDS[command](params)
             else:
                 fallback_command(command)
                 
@@ -48,3 +56,4 @@ if __name__ == "__main__":
     print(ascii_art)
     print("RSR Project - (c) BARBARIN Paul - MORENO CARPIO Kenzo")
     interactive_shell()
+    thread = threading.Thread(target=arp)

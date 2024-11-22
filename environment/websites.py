@@ -1,5 +1,3 @@
-headers = ["Domaine", "HTTPS", "Identifiants récupérés", "Status"]
-
 WEBSITES = [
-	["facebook.com", 1, 12, 1]
+	[1, "facebook.com", 1, 12, 1]
 ]
