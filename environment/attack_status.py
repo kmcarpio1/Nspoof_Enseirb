@@ -1,6 +1,6 @@
 ATTACK_STATUS = {
 	"status": 0,
-	"dns": "192.168.0.1",
-	"victims": "192.168.0.0/24",
-	'iface': "eth0"
+	"dns": "172.21.0.254",
+	"victims": "172.21.202.103",
+	'iface': "eth1"
 }

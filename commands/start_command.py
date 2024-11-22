@@ -10,9 +10,9 @@ def start_command(params):
 
 	if ATTACK_STATUS['status'] == 0:
 
+		ATTACK_STATUS['status'] = 1
 		t = threading.Thread(target=arp)
 		print("Démarrage de l'attaque")
-		ATTACK_STATUS['status'] = 1
 		t.start()
 
 	else:
