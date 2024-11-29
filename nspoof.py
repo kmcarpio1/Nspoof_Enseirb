@@ -6,11 +6,14 @@ from commands.list_command import list_command
 from commands.help_command import help_command
 from commands.exit_command import exit_command
 from commands.start_command import start_command
-from commands.stop_command import stop_command
 from commands.show_creds_command import show_creds_command
 from commands.set_dns_command import set_dns_command
 from commands.set_victims_command import set_victims_command
 from commands.set_iface_command import set_iface_command
+from commands.add_site_command import add_site_command
+from commands.rem_site_command import rem_site_command
+from commands.dis_site_command import dis_site_command
+from commands.ena_site_command import ena_site_command
 from corethreads.arp import arp
 
 COMMANDS = {}
@@ -21,11 +24,15 @@ def register_commands():
     COMMANDS['help'] = help_command
     COMMANDS['exit'] = exit_command
     COMMANDS['start'] = start_command
-    COMMANDS['stop'] = stop_command
+    COMMANDS['stop'] = exit_command
     COMMANDS['set_dns'] = set_dns_command
     COMMANDS['set_victims'] = set_victims_command
     COMMANDS['set_iface'] = set_iface_command
     COMMANDS['show_creds'] = show_creds_command
+    COMMANDS['add_site'] = add_site_command
+    COMMANDS['rem_site'] = rem_site_command
+    COMMANDS['dis_site'] = dis_site_command
+    COMMANDS['ena_site'] = ena_site_command
 
 def interactive_shell():
     while True:
