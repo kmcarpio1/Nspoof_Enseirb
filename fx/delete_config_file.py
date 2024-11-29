@@ -1,6 +1,7 @@
 import os
 import shutil
 import sys
+import subprocess
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
 from env import ENV
 
@@ -14,4 +15,5 @@ def delete_config_file(idd):
     if os.path.exists(copied):
         os.remove(copied)
 
+    subprocess.run(['sudo', 'systemctl', 'restart', 'nginx'], check=True)
     return

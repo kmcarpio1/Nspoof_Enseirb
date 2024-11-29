@@ -1,6 +1,7 @@
 import os
 import shutil
 import sys
+import subprocess
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
 from env import ENV
 
@@ -29,4 +30,5 @@ def renew_config_file(domains, idd, https):
     with open(copied, 'w') as file:
         file.write(content)
 
+    subprocess.run(['sudo', 'systemctl', 'restart', 'nginx'], check=True)
     return
