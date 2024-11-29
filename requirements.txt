@@ -1,0 +1,4 @@
+pyfiglet
+scapy
+tabulate
+termcolor
