@@ -3,8 +3,11 @@ import os
 import tarfile
 import shutil
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'fx')))
 from attack_status import ATTACK_STATUS
 from websites import WEBSITES
+from renew_config_file import renew_config_file
+from env import ENV
 
 def add_site_command(params):
 
@@ -12,8 +15,8 @@ def add_site_command(params):
 		print("L'attaque est déja en cours.")
 		return
 
-	if len(params) < 2:
-		print("Vous devez spécifier au moins un domaine et un le chemin d'un fichier ZIP contenant les fichiers du site à usurper.")
+	if len(params) < 3:
+		print("Vous devez spécifier au moins un domaine, un le chemin d'un fichier ZIP contenant les fichiers du site à usurper, et l'activation du HTTPS.")
 		return
 
 	if len(WEBSITES) == 0:
@@ -21,12 +24,12 @@ def add_site_command(params):
 	else:
 		idd = WEBSITES[-1][0] + 1
 
-	domains = params[:-1]
+	domains = params[:-2]
 
 	# Recreation of folder
 	try:
 
-		newdir = '/var/www/nspoof/website' + str(idd)
+		newdir = ENV['webserver_location'] + '/website' + str(idd)
 
 		if os.path.exists(newdir):
 			shutil.rmtree(newdir)
@@ -40,7 +43,7 @@ def add_site_command(params):
 	# Recreation of temp folder
 	try:
 
-		tmpdir = '/tmp/nspoof'
+		tmpdir = ENV['tmp_location']
 
 		if os.path.exists(tmpdir):
 			shutil.rmtree(tmpdir)
@@ -53,7 +56,7 @@ def add_site_command(params):
 
 	# Extraction of tarfile
 	try:
-		with tarfile.open(params[-1], 'r:gz') as tar:
+		with tarfile.open(params[-2], 'r:gz') as tar:
 			tar.extractall(path=tmpdir)
 	except:
 		print("Erreur. Le fichier tar n'existe pas.")
@@ -69,6 +72,8 @@ def add_site_command(params):
 	except:
 		print("Erreur dans le déplacement.")
 
-	new_site = [idd, domains, 0, 1, [], newdir]
+	new_site = [idd, domains, 0, 1, [], newdir, int(params[-1])]
+
+	renew_config_file(domains, idd, int(params[-1]))
 
 	WEBSITES.append(new_site)

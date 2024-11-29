@@ -1,8 +1,10 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'fx')))
 from attack_status import ATTACK_STATUS
 from websites import WEBSITES
+from renew_config_file import renew_config_file
 
 def rem_domain_to_site_command(params):
 
@@ -17,5 +19,7 @@ def rem_domain_to_site_command(params):
 			WEBSITES[int(params[-1]) - 1][1].remove(domains[i])
 	except IndexError:
 		print("Le site n'existe pas.")
+
+	renew_config_file(WEBSITES[int(params[-1]) - 1][1], WEBSITES[int(params[-1]) - 1][0], WEBSITES[int(params[-1]) - 1][6])
 
 	return

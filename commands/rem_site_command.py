@@ -3,8 +3,11 @@ import os
 import tarfile
 import shutil
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'fx')))
 from attack_status import ATTACK_STATUS
 from websites import WEBSITES
+from delete_config_file import delete_config_file
+from env import ENV
 
 def rem_site_command(params):
 
@@ -22,16 +25,17 @@ def rem_site_command(params):
 	except IndexError:
 		print("Le site n'existe pas.")
 
-	# Deletion of folder
+	# Deletion of folder and manifest
 	try:
 
-		dir_to_delete = '/var/www/nspoof/website' + str(idd)
+		dir_to_delete = ENV['webserver_location'] + '/website' + str(idd)
+		manifest_to_delete = ENV['nginx_manifests'] + '/website' + str(idd) + ".conf"
 
 		if os.path.exists(dir_to_delete):
 			shutil.rmtree(dir_to_delete)
 
 	except:
-		print("Erreur lors de la supression du dossier.")
+		print("Erreur lors de la supression du dossier et du manifest.")
 		return
 
 	return
