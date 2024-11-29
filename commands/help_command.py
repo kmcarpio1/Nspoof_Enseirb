@@ -13,11 +13,10 @@ def help_command(params):
         ["rem_site [domain(s)] [archive]", "Supprimer un site internet à usurper"],
         ["dis_site [site_id]", "Désactiver temporairement un site"],
         ["ena_site [site_id]", "Réactiver un site"],
-        ["add_domain_to_site [site_id] [domain(s)]", "Ajouter un domaine à un site à usurper"],
-        ["rem_domain_to_site [site_id] [domain(s)]", "Supprimer un domaine à un site à usurper"],
+        ["add_domain_to_site [domain(s)] [site_id]", "Ajouter un domaine à un site à usurper"],
+        ["rem_domain_to_site [domain(s)] [site_id]", "Supprimer un domaine à un site à usurper"],
         ["start", "Démarrer l'attaque"],
-        ["stop", "Stopper"],
-        ["exit", "Terminer l'attaque et le programme"],
+        ["stop | exit", "Terminer l'attaque et le programme"],
     ]
 
     headers = ["Commande", "Usage"]

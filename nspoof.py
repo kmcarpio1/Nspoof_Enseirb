@@ -14,6 +14,8 @@ from commands.add_site_command import add_site_command
 from commands.rem_site_command import rem_site_command
 from commands.dis_site_command import dis_site_command
 from commands.ena_site_command import ena_site_command
+from commands.add_domain_to_site_command import add_domain_to_site_command
+from commands.rem_domain_to_site_command import rem_domain_to_site_command
 from corethreads.arp import arp
 
 COMMANDS = {}
@@ -33,6 +35,7 @@ def register_commands():
     COMMANDS['rem_site'] = rem_site_command
     COMMANDS['dis_site'] = dis_site_command
     COMMANDS['ena_site'] = ena_site_command
+    COMMANDS['add_domain_to_site'] = add_domain_to_site_command
 
 def interactive_shell():
     while True:

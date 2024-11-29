@@ -11,10 +11,10 @@ def list_command(params):
     data = WEBSITES
 
     def formatted_item(row):
-        return [row[0], ", ".join(map(str, row[1])), row[2], colored("Activé" if row[3] == 1 else "Désactivé", "green" if row[3] == 1 else "red")]
+        return [row[0], ", ".join(map(str, row[1])), row[2], colored("Activé" if row[3] == 1 else "Désactivé", "green" if row[3] == 1 else "red"), row[5]]
 
     websites_formatted = map(formatted_item, WEBSITES)
 
-    headers = ["Id", "Domaine", "Identifiants récupérés", "Status"]
+    headers = ["Id", "Domaine", "Identifiants récupérés", "Status", "Chemin des fichiers du site"]
 
     print(tabulate(websites_formatted, headers, tablefmt="grid"))
