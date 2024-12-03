@@ -1,5 +1,6 @@
 import sys
 import pyfiglet
+import readline  # Ajout de readline pour l'autocomplétion
 from commands.fallback_command import fallback_command
 from commands.status_command import status_command
 from commands.list_command import list_command
@@ -26,7 +27,6 @@ def register_commands():
     COMMANDS['help'] = help_command
     COMMANDS['exit'] = exit_command
     COMMANDS['start'] = start_command
-    COMMANDS['stop'] = exit_command
     COMMANDS['set_dns'] = set_dns_command
     COMMANDS['set_victims'] = set_victims_command
     COMMANDS['set_iface'] = set_iface_command
@@ -36,15 +36,24 @@ def register_commands():
     COMMANDS['dis_site'] = dis_site_command
     COMMANDS['ena_site'] = ena_site_command
     COMMANDS['add_domain_to_site'] = add_domain_to_site_command
+    COMMANDS['rem_domain_to_site'] = rem_domain_to_site_command
+    COMMANDS['exit'] = exit_command
+
+
+def completion(text, state):
+    options = [cmd for cmd in COMMANDS.keys() if cmd.startswith(text)]
+    return options[state] if state < len(options) else None
+
+def enable_autocompletion():
+    readline.set_completer(completion)
+    readline.parse_and_bind("tab: complete")  # Lier la touche Tab pour l'autocomplétion
 
 def interactive_shell():
     while True:
         try:
-
             user_input = input("nspoof >>> ").strip()
             if not user_input:
                 continue
-
 
             parts = user_input.split()
             command = parts[0]
@@ -54,16 +63,19 @@ def interactive_shell():
                 COMMANDS[command](params)
             else:
                 fallback_command(command)
-                
+
         except Exception as e:
             print(f"Erreur: {e}")
 
-
 register_commands()
+enable_autocompletion()
 
 if __name__ == "__main__":
     ascii_art = pyfiglet.figlet_format("Nspoof")
     print(ascii_art)
     print("RSR Project - (c) BARBARIN Paul - MORENO CARPIO Kenzo")
     interactive_shell()
+
+    # Démarrage d'un thread pour arp
     thread = threading.Thread(target=arp)
+    thread.start()
