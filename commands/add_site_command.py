@@ -3,7 +3,7 @@ import os
 import tarfile
 import shutil
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'fx')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
 from attack_status import ATTACK_STATUS
 from websites import WEBSITES
 from renew_config_file import renew_config_file
@@ -45,6 +45,8 @@ def add_site_command(params):
 
 		tmpdir = ENV['tmp_location']
 
+		print(tmpdir)
+
 		if os.path.exists(tmpdir):
 			shutil.rmtree(tmpdir)
 
@@ -56,7 +58,7 @@ def add_site_command(params):
 
 	# Extraction of tarfile
 	try:
-		with tarfile.open(params[-2], 'r:gz') as tar:
+		with tarfile.open(ENV['nspoof_location'] + "/web-templates/" + params[-2] + ".tar.gz", 'r:gz') as tar:
 			tar.extractall(path=tmpdir)
 	except:
 		print("Erreur. Le fichier tar n'existe pas.")
