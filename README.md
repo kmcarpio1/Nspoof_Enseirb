@@ -1,18 +1,7 @@
-                               __ 
-                              / _|
-  _ __  ___ _ __   ___   ___ | |_ 
- | '_ \/ __| '_ \ / _ \ / _ \|  _|
- | | | \__ \ |_) | (_) | (_) | |  
- |_| |_|___/ .__/ \___/ \___/|_|  
-           | |                    
-           |_|          
-
-
 # Nspoof.sh util
-## A tool to automate attacks by DNS usurpation
-(c) Paul BARBARIN - MORENO CARPIO Kenzo
+tool to automate attacks by DNS usurpation - (c) Paul BARBARIN - MORENO CARPIO Kenzo - RSR Project
 ---
-Educative only !
+Educative usage only -- Other usages could be illegal
 
 ## Launch program
 To launch the program, you just have to execute the following command :
