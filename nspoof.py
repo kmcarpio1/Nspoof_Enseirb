@@ -88,11 +88,6 @@ if __name__ == "__main__":
     file_path = os.path.abspath(__file__)
     directory = os.path.dirname(file_path)
 
-    ENV['nspoof_location'] = directory
-    ENV['tmp_location'] = directory + "/tmp"
-
-    print("Actual environment :", ENV)
-
     interactive_shell()
 
     thread1 = threading.Thread(target=arp)

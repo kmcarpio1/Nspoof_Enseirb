@@ -45,15 +45,13 @@ def add_site_command(params):
 
 		tmpdir = ENV['tmp_location']
 
-		print(tmpdir)
-
 		if os.path.exists(tmpdir):
 			shutil.rmtree(tmpdir)
 
 		os.makedirs(tmpdir)
 
-	except:
-		print("Erreur lors de la recréation du dossier temporaire.")
+	except Exception as e:
+		print("Erreur lors de la recréation du dossier temporair''e.")
 		return
 
 	# Extraction of tarfile
