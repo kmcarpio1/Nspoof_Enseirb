@@ -42,7 +42,7 @@ def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
     #                create_dns_response(website, dns, network, pkt, src_ip, dst_ip)
     #                return
 
-    forward_dns(pkt) #if something is wrong, it will forward the package
+    forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
 
 def match_website(websites,domain_name):
     if websites :
@@ -51,19 +51,19 @@ def match_website(websites,domain_name):
                 return website
     return False
 
-def forward_dns(pkt, dst_IP):
+def forward_dns(pkt, dst_ip):
     #A VERIFIER !!!
     pkt[IP].chksum = None  
     pkt[UDP].chksum = None  
     
     pkt[Ether].src = pkt[Ether].dst #we replace the sender MAC with our
-    dst_MAC = get_MAC(dst_IP)#we replace the destination MAC by the real one 
+    dst_MAC = get_MAC(dst_ip)#we replace the destination MAC by the real one 
 
     if dst_MAC:
         pkt[Ether].dst = dst_MAC
         sendp(pkt)
     else:
-        print(f"Error: Unable to resolve MAC address for {dst_IP}")
+        print(f"Error: Unable to resolve MAC address for {dst_ip}")
         #SINON AFFICHER QU'IL Y A UN PB
 
 
