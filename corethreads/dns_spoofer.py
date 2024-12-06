@@ -2,7 +2,7 @@ from scapy.all import *
 from scapy.layers.dns import DNS, DNSRR, DNSQR
 import sys
 import os
-import ipaddress
+import ipaddress 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
 from attack_status import ATTACK_STATUS
 from websites import WEBSITES
@@ -24,7 +24,7 @@ def dns_sorting_start(pkt):
 
 def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
 
-    if pkt[DNS].qr == 0 and ip_address(src_ip) in network and dst_ip == dns : #if it's a request we want to block the one from the victim to the dns server
+    if pkt[DNS].qr == 0 and ipaddress.ip_address(src_ip) in network and dst_ip == dns : #if it's a request we want to block the one from the victim to the dns server
         domain_name = pkt[DNS][DNSQR].qname.decode('utf-8')
         website = match_website(websites, domain_name)
         if website: #if there is a corresponding website in out data
@@ -33,7 +33,7 @@ def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
                 return
 
     #SI C EST UNE REPONSE, ON FORWARD JUSTE ?
-    #elif pkt[DNS].qr == 1 and src_ip == dns and ip_address(dst_ip) in network and match_website() : #if it's a response we want to block the one from the dns server to the victim
+    #elif pkt[DNS].qr == 1 and src_ip == dns and ipaddress.ip_address(dst_ip) in network and match_website() : #if it's a response we want to block the one from the dns server to the victim
     #    if pkt[DNS].an : #check if there is a response
     #        domain_name = pkt[DNS].an.rrname.decode('utf-8')
     #        website = match_website(website, domain_name)
