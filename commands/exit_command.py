@@ -1,6 +1,7 @@
 import sys
 import os
 import shutil
+import signal
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
 from attack_status import ATTACK_STATUS
@@ -10,7 +11,7 @@ from env import ENV
 
 def exit_command(params):
 
-    folders = [ENV['webserver_location'], ENV['nginx_manifests']]
+    folders = [ENV['webserver_location'], ENV['nginx_manifests'], ENV['nspoof_location'] + "/credentials"]
 
     for folder in folders:
         if os.path.exists(folder):
@@ -23,5 +24,9 @@ def exit_command(params):
             os.makedirs(folder, exist_ok=True)
 
     print("[OK] Suppression des fichiers")
+
+    os.kill(ATTACK_STATUS['wspid'], signal.SIGTERM)
+
     print("[OK] Arrêt du programme")
+
     sys.exit()

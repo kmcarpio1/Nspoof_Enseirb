@@ -87,6 +87,6 @@ if __name__ == "__main__":
 
     interactive_shell()
 
-    # Démarrage d'un thread pour arp
-    thread = threading.Thread(target=arp)
-    thread.start()
+    thread1 = threading.Thread(target=arp)
+    thread1.start()
+    thread2.start()
