@@ -1,6 +1,7 @@
 import sys
 import pyfiglet
 import os
+import signal
 import readline  # Ajout de readline pour l'autocomplétion
 from commands.fallback_command import fallback_command
 from commands.status_command import status_command
@@ -48,7 +49,14 @@ def completion(text, state):
 
 def enable_autocompletion():
     readline.set_completer(completion)
-    readline.parse_and_bind("tab: complete")  # Lier la touche Tab pour l'autocomplétion
+    readline.parse_and_bind("tab: complete")
+
+def exitc(a,b):
+    exit_command([])
+    return
+
+signal.signal(signal.SIGINT, exitc)
+signal.signal(signal.SIGTERM, exitc)
 
 def interactive_shell():
     while True:
