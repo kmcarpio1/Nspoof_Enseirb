@@ -6,6 +6,8 @@ from attack_status import ATTACK_STATUS
 
 def arp():
 
+	print("Starting ARP Bombing")
+
 	self_mac = get_if_hwaddr(str(ATTACK_STATUS['iface']))
 
 	if not self_mac:

@@ -2,6 +2,7 @@ import sys
 import pyfiglet
 import os
 import signal
+import threading
 import readline  # Ajout de readline pour l'autocomplétion
 from commands.fallback_command import fallback_command
 from commands.status_command import status_command
@@ -19,7 +20,6 @@ from commands.dis_site_command import dis_site_command
 from commands.ena_site_command import ena_site_command
 from commands.add_domain_to_site_command import add_domain_to_site_command
 from commands.rem_domain_to_site_command import rem_domain_to_site_command
-from corethreads.arp import arp
 from environment.env import ENV
 
 COMMANDS = {}
@@ -85,11 +85,4 @@ if __name__ == "__main__":
     print(ascii_art)
     print("RSR Project - (c) BARBARIN Paul - MORENO CARPIO Kenzo")
 
-    file_path = os.path.abspath(__file__)
-    directory = os.path.dirname(file_path)
-
     interactive_shell()
-
-    thread1 = threading.Thread(target=arp)
-    thread1.start()
-    thread2.start()
