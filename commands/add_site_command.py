@@ -60,15 +60,30 @@ def add_site_command(params):
 		print("Erreur. Le fichier tar n'existe pas.")
 		return
 
-	# Moving files
+	# Moving files with directory structure preserved
 	try:
-		for root, dirs, files in os.walk(tmpdir):
-			for file in files:
-				src_file = os.path.join(root, file)
-				dest_file = os.path.join(newdir, file)
-				shutil.move(src_file, dest_file)
-	except:
-		print("Erreur dans le déplacement.")
+	    for root, dirs, files in os.walk(tmpdir):
+	        for file in files:
+	            # Source file path in tmpdir
+	            src_file = os.path.join(root, file)
+	            
+	            # Relative path from tmpdir (to preserve the directory structure)
+	            relative_path = os.path.relpath(root, tmpdir)
+	            
+	            # Destination path in newdir, creating necessary directories
+	            dest_dir = os.path.join(newdir, relative_path)
+	            
+	            # Ensure the destination directory exists
+	            if not os.path.exists(dest_dir):
+	                os.makedirs(dest_dir)
+	            
+	            # Destination file path
+	            dest_file = os.path.join(dest_dir, file)
+	            
+	            # Move the file to the destination, preserving the directory structure
+	            shutil.move(src_file, dest_file)
+	except Exception as e:
+	    print(f"Erreur dans le déplacement : {str(e)}")
 
 	new_site = [idd, domains, 0, 1, [], newdir, int(params[-1])]
 

@@ -33,13 +33,12 @@ if ! command -v iptables &> /dev/null
 then
     apt install -y iptables
 fi
-echo "Restore IPV4 special rules"
+echo "Restore IPV4 special rules ..."
 iptables-restore < iptables_templates/rules.v4
 
 # If virtual env is founded delete VENV
 if [ -d "python3-nspoof" ]; then
     rm -rf python3-nspoof
-    exit
 fi
 
 # Recreate venv
