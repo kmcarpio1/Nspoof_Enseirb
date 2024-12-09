@@ -2,8 +2,8 @@ import os
 import shutil
 import sys
 import subprocess
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
-from env import ENV
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from environment import *
 
 def renew_config_file(domains, idd, https):
 

@@ -2,12 +2,10 @@ import sys
 import os
 import tarfile
 import shutil
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
-from attack_status import ATTACK_STATUS
-from websites import WEBSITES
 from delete_config_file import delete_config_file
-from env import ENV
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from environment import *
 
 def rem_site_command(params):
 
