@@ -4,10 +4,9 @@ import os
 import pdb
 import csv
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
-from env import ENV
-from creds import CREDS
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from environment import *
 from csveditor import update_csv_with_json
 
 app = Flask(__name__)

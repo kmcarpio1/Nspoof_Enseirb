@@ -1,6 +1,6 @@
 from scapy.all import *
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
-from arp_cache import IP_MAC
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from environment import *
 
 
 def get_MAC(dst_IP):

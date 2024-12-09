@@ -1,7 +1,7 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
-from creds import CREDS
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from environment import *
 from tabulate import tabulate
 from termcolor import colored
 

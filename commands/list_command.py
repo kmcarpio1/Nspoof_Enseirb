@@ -3,8 +3,8 @@ from termcolor import colored
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
-from websites import WEBSITES
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from environment import *
 
 def list_command(params): 
     

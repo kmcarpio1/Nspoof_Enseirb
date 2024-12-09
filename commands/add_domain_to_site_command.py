@@ -1,9 +1,8 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'environment')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
-from attack_status import ATTACK_STATUS
-from websites import WEBSITES
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from environment import *
 from renew_config_file import renew_config_file
 
 def add_domain_to_site_command(params):

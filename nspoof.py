@@ -20,7 +20,7 @@ from commands.dis_site_command import dis_site_command
 from commands.ena_site_command import ena_site_command
 from commands.add_domain_to_site_command import add_domain_to_site_command
 from commands.rem_domain_to_site_command import rem_domain_to_site_command
-from environment.env import ENV
+from environment import ENV
 
 COMMANDS = {}
 

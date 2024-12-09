@@ -1,0 +1,28 @@
+*filter
+# Effacer les règles existantes
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# Règles pour autoriser toutes les connexions entrantes et sortantes
+# Connexions entrantes autorisées
+-A INPUT -j ACCEPT
+
+# Connexions sortantes autorisées
+-A OUTPUT -j ACCEPT
+
+# Connexions forwarding autorisées
+-A FORWARD -j ACCEPT
+
+# Autoriser les connexions DNS en entrée et en sortie, mais PAS en forwarding
+-A INPUT -p udp --dport 53 -j ACCEPT
+-A OUTPUT -p udp --sport 53 -j ACCEPT
+-A FORWARD -p udp --dport 53 -j DROP
+
+# Autoriser les connexions DNS en entrée et en sortie sur TCP (au cas où)
+-A INPUT -p tcp --dport 53 -j ACCEPT
+-A OUTPUT -p tcp --sport 53 -j ACCEPT
+-A FORWARD -p tcp --dport 53 -j DROP
+
+# Enregistrer et appliquer les règles
+COMMIT
