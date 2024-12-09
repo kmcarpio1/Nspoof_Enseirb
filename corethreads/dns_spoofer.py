@@ -57,8 +57,8 @@ def match_website(websites,domain_name):
 def forward_dns(pkt, dst_ip):
     return
     #A VERIFIER !!!
-    pkt[IP].chksum = None  
-    pkt[UDP].chksum = None  
+    # pkt[IP].chksum = None  
+    # pkt[UDP].chksum = None  
     
     pkt[Ether].src = pkt[Ether].dst #we replace the sender MAC with our
     dst_MAC = get_MAC(dst_ip)#we replace the destination MAC by the real one 
@@ -66,6 +66,10 @@ def forward_dns(pkt, dst_ip):
     if dst_MAC:
         pkt[Ether].dst = dst_MAC
         sendp(pkt)
+        if IP in pkt:
+            print("Forwarding package from" + pkt[IP].src + "to" + pkt[IP].dst)
+        else :
+            print("Forwarding package")
     else:
         print(f"Error: Unable to resolve MAC address for {dst_ip}")
         #SINON AFFICHER QU'IL Y A UN PB
@@ -91,7 +95,6 @@ def create_dns_response(website, dns, network, pkt, req_src_ip, req_dst_ip, doma
     fake_dns_response = fake_ether/fake_IP/fake_UDP/fake_DNS
     print("Will send a package")
     sendp(fake_dns_response, verbose=False)
-    print("Finalll")
 
 
 #def create_dns_after_response(website, dns, network, pkt, src_ip, dst_ip):
