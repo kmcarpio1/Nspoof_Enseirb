@@ -28,13 +28,13 @@ then
     systemctl stop apache2
 fi
 
-# Check if iptables is installed
-if ! command -v iptables &> /dev/null
-then
-    apt install -y iptables
-fi
-echo "Restore IPV4 special rules ..."
-iptables-restore < iptables_templates/rules.v4
+# # Check if iptables is installed
+# if ! command -v iptables &> /dev/null
+# then
+#     #apt install -y iptables
+# fi
+#echo "Restore IPV4 special rules ..."
+#iptables-restore < iptables_templates/rules.v4
 
 # If virtual env is founded delete VENV
 if [ -d "python3-nspoof" ]; then
