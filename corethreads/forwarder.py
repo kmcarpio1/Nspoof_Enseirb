@@ -7,11 +7,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 from mac_management import *
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> refs/remotes/origin/main
 def forwarder(pkt):
     if pkt[IP] and pkt[Ether]:
         self_mac = get_if_hwaddr(str(ATTACK_STATUS['iface']))
@@ -24,7 +19,7 @@ def forwarder(pkt):
 
         if dst_MAC:
             pkt[Ether].dst = dst_MAC
-            sendp(pkt)
+            sendp(pkt, verbose=False)
         #    print("Forwarding package from" + str(pkt[IP].src) + " to " + str(pkt[IP].dst) )
         #else:
         #    print(f"Error: Unable to resolve MAC address for {str(pkt[IP].src)}")

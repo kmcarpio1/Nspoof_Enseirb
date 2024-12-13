@@ -54,4 +54,6 @@ def arptable():
     for thread in threads:
         thread.join()
 
+    print(ARPTABLE)
+
     return

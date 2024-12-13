@@ -76,7 +76,7 @@ def forward_dns(pkt, dst_ip):
 
     if dst_MAC:
         pkt[Ether].dst = dst_MAC
-        sendp(pkt)
+        sendp(pkt, verbose=False)
     #    if IP in pkt:
     #        print("Forwarding package from" + str(pkt[IP].src) + " to " + str(pkt[IP].dst) + " for domain name "+ str(pkt[DNS][DNSQR].qname.decode('utf-8')) + " On a request " + str(pkt.getlayer(DNS).qd.qtype))
     #    else :

