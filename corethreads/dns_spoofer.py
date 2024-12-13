@@ -66,7 +66,7 @@ def match_website(websites,domain_name):
     return False
 
 def forward_dns(pkt, dst_ip):
-    return
+    
     pkt[IP].chksum = None  
     pkt[UDP].chksum = None  
     
