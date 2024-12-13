@@ -16,5 +16,5 @@ def launch_forward(pkt, self_mac):
 def other_sniffer():
     iface = str(ATTACK_STATUS['iface'])
     self_mac = get_if_hwaddr(iface)
-    print("Starting DNS sniffer")
+    print("Starting other sniffer")
     sniff(filter="(udp or tcp) and not port 53", prn=lambda pkt: launch_forward(pkt, self_mac), iface=iface)
