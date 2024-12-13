@@ -17,8 +17,12 @@ ENV = {
 ```
 Warning ! All of these folders have to be created BEFORE launching the program.
 
-## Save your current firewall rules
-Make sure you don't have installed firewall other than iptables. Please also consider saving your current iptables rules, because it will be lost when the program starts.
+## Check your firewall rules
+Your firewall have to allow IN and OUT DNS requests, but blocking forwarding.
+Yout firewall have to allow other protocols for forward (ex: HTTP)
+
+## Check your forwarding
+You have to allow IP forwarding on your machine
 
 ## Launch !
 To launch the program, you just have to execute the following command :
