@@ -6,7 +6,8 @@ from environment import *
 from renew_config_file import renew_config_file
 
 #
-# Handler for adding a site to the list of spoofed websites
+# Handler for adding a domain(s) to a website
+#
 def add_domain_to_site_command(params):
 
 	# Manage errors on parameters
@@ -17,12 +18,13 @@ def add_domain_to_site_command(params):
 	# Get the domain list
 	domains = params[:-1]
 
-	# Try to access the domains
+	# Try to update the domain list of the targeted website
 	try:
 		WEBSITES[int(params[-1]) - 1][1].extend(domains)
 	except IndexError:
 		print("Le site n'existe pas.")
 
+	# Renew nginx configuration
 	renew_config_file(WEBSITES[int(params[-1]) - 1][1], WEBSITES[int(params[-1]) - 1][0], WEBSITES[int(params[-1]) - 1][6])
 
 	return

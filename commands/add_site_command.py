@@ -8,12 +8,16 @@ from environment import *
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
 from renew_config_file import renew_config_file
 
+#
+# Handler for adding a website to spoofed websites
+#
 def add_site_command(params):
 
+	# Check if attack status is pending or not
 	if ATTACK_STATUS['status'] != 0:
 		print("L'attaque est déja en cours.")
 		return
-
+	
 	if len(params) < 3:
 		print("Vous devez spécifier au moins un domaine, un le chemin d'un fichier ZIP contenant les fichiers du site à usurper, et l'activation du HTTPS.")
 		return
