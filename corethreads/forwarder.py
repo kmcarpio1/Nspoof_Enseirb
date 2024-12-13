@@ -7,8 +7,11 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 from mac_management import *
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> refs/remotes/origin/main
 def forwarder(pkt):
     if pkt[IP] and pkt[Ether]:
         self_mac = get_if_hwaddr(str(ATTACK_STATUS['iface']))
