@@ -11,6 +11,7 @@ from commands.help_command import help_command
 from commands.exit_command import exit_command
 from commands.start_command import start_command
 from commands.show_creds_command import show_creds_command
+from commands.show_history_command import show_history_command
 from commands.set_dns_command import set_dns_command
 from commands.set_victims_command import set_victims_command
 from commands.set_iface_command import set_iface_command
@@ -34,6 +35,7 @@ def register_commands():
     COMMANDS['set_victims'] = set_victims_command
     COMMANDS['set_iface'] = set_iface_command
     COMMANDS['show_creds'] = show_creds_command
+    COMMANDS['show_history'] = show_history_command
     COMMANDS['add_site'] = add_site_command
     COMMANDS['rem_site'] = rem_site_command
     COMMANDS['dis_site'] = dis_site_command
@@ -81,7 +83,7 @@ register_commands()
 enable_autocompletion()
 
 if __name__ == "__main__":
-    ascii_art = pyfiglet.figlet_format("Nspoof.py")
+    ascii_art = pyfiglet.figlet_format("Nspoof")
     print(ascii_art)
     print("RSR Project - (c) BARBARIN Paul - MORENO CARPIO Kenzo")
 

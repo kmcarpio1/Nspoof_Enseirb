@@ -22,6 +22,5 @@ def add_to_history(IP, domain_name):
     formatted = now.strftime("%Y-%m-%d %H:%M:%S")
 
     with open(file_path, 'a') as file:
-        file.write(f"{formatted} : {domain_name}.\n")
-        #print("écrit  " +domain_name + IP)
+        file.write(f"{formatted}|||{domain_name}.\n")
     

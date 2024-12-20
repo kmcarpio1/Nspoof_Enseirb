@@ -21,13 +21,10 @@ def exit_command(params):
         manager.thread1.join();
     print("[ARRETE] Man-In-The-Middle ARP")
 
-
-    print('2')
     if manager.thread2.is_alive():
         manager.thread2.join();
     print("[ARRETE] Sniffeur DNS")
 
-    print('3')
     if manager.thread3.is_alive():
         manager.thread3.join();
     print("[ARRETE] Sniffeur autres paquets")
