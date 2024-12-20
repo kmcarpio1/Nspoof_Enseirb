@@ -6,6 +6,7 @@ import ipaddress
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 from mac_management import *
+from history import *
 
 def dns_sorting_start(pkt):
 
@@ -28,6 +29,7 @@ def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
 
         domain_name = pkt[DNS][DNSQR].qname.decode('utf-8')
         website = match_website(websites, domain_name)
+        add_to_history(src_ip,domain_name)
 
         if website: #if there is a corresponding website in out data
 
