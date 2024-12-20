@@ -9,7 +9,7 @@ def renew_config_file(domains, idd, https):
 
     dst = ENV['nginx_manifests']
 
-    copied = os.path.join(dst, 'website' + str(idd) + ".conf")
+    copied = os.path.join(dst, 'nspoof' + str(idd) + ".conf")
 
     if os.path.exists(copied):
         os.remove(copied)

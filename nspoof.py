@@ -81,7 +81,7 @@ register_commands()
 enable_autocompletion()
 
 if __name__ == "__main__":
-    ascii_art = pyfiglet.figlet_format("Nspoof")
+    ascii_art = pyfiglet.figlet_format("Nspoof.py")
     print(ascii_art)
     print("RSR Project - (c) BARBARIN Paul - MORENO CARPIO Kenzo")
 

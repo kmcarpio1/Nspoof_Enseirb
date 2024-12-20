@@ -5,10 +5,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 import threading
 import subprocess
-from corethreads.arp import arp
-from corethreads.dns_listen import dns_sniffer
+from corethreads.coremanager import manager
 from corethreads.arptable import arptable
-from corethreads.other_listen import other_sniffer
 
 def start_command(params):
 
@@ -20,16 +18,12 @@ def start_command(params):
 		thread0.start()
 		thread0.join()
 
-		thread1 = threading.Thread(target=arp)
-		thread2 = threading.Thread(target=dns_sniffer)
-		thread3 = threading.Thread(target=other_sniffer)
-		thread1.start()
-		thread2.start()
-		thread3.start()
+		manager.start_threads()
 
 		process = subprocess.Popen(["python3", "corethreads/credentials_catcher.py"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 		ATTACK_STATUS['wspid'] = process.pid
 
+		return
 
 	else:
 

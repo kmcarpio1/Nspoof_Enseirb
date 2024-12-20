@@ -13,8 +13,12 @@ def launch_forward(pkt, self_mac):
         thread = threading.Thread(target=forwarder, args=(pkt,))
         thread.start()
 
-def other_sniffer():
+def other_sniffer(stopEvent):
+
+    def stop_sniffer(pkt):
+        return stopEvent.is_set()
+
     iface = str(ATTACK_STATUS['iface'])
     self_mac = get_if_hwaddr(iface)
-    print("Starting other sniffer")
-    sniff(filter="(udp or tcp) and not port 53", prn=lambda pkt: launch_forward(pkt, self_mac), iface=iface)
+    print("[DEMARRE] Sniffeur autres paquets")
+    sniff(filter="(udp or tcp) and not port 53", prn=lambda pkt: launch_forward(pkt, self_mac), iface=iface, stop_filter=stop_sniffer)

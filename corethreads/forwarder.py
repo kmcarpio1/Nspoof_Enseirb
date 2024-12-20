@@ -19,7 +19,10 @@ def forwarder(pkt):
 
         if dst_MAC:
             pkt[Ether].dst = dst_MAC
-            sendp(pkt, verbose=False)
+            try:
+                sendp(pkt, verbose=False)
+            except Exception as e:
+                pass
         #    print("Forwarding package from" + str(pkt[IP].src) + " to " + str(pkt[IP].dst) )
         #else:
         #    print(f"Error: Unable to resolve MAC address for {str(pkt[IP].src)}")

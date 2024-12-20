@@ -11,10 +11,10 @@ ATTACK_STATUS = {
 }
 
 ENV = {
-	"nginx_manifests": "/etc/nginx/sites-enabled",
-	"webserver_location": "/var/www",
-	"nspoof_location": "/home/paul/Documents/enseirb-nspoof",
-	"tmp_location": "/home/paul/Documents/enseirb-nspoof/tmp",
+	"nginx_manifests": "${NGINX_MANIFESTS}",
+	"webserver_location": "${WEBSERVER_FILES_LOCATION}",
+	"nspoof_location": "${NSPOOF_LOCATION}",
+	"tmp_location": "${NSPOOF_LOCATION}/tmp",
 }
 
 WEBSITES = []

