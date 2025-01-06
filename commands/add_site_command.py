@@ -66,14 +66,20 @@ def add_site_command(params):
 
 	# Extraction of tarfile
 	try:
-		with tarfile.open(ENV['nspoof_location'] + "/web-templates/" + params[-2] + ".tar.gz", 'r:gz') as tar:
-			tar.extractall(path=tmpdir)
+		# Construire le chemin de l'archive
+		tar_path = os.path.join(ENV['nspoof_location'], "web-templates", params[-2] + ".tar.gz")
+		# Créer un sous-dossier dans tmpdir avec le nom de l'archive
+		root_folder = os.path.join(tmpdir, params[-2])  # Nom de l'archive sans .tar.gz
+		os.makedirs(root_folder, exist_ok=True)
+		# Ouvrir et extraire l'archive dans le dossier racine
+		with tarfile.open(tar_path, 'r:gz') as tar:
+			tar.extractall(path=root_folder)
 	except:
 		print("Erreur. Le fichier tar n'existe pas.")
 		return
 
 	subprocess.run(['mv', tmpdir + '/' + params[-2], newdir], check=True)
-
+	
 	create_file(newdir, "site_id.txt", str(idd))
 	create_file(newdir, "domain_name.txt", str(domains[0]))
 
