@@ -4,9 +4,9 @@ ARPTABLE = {}
 
 ATTACK_STATUS = {
 	"status": 0,
-	"dns": "172.21.0.254",
-	"victims": "172.21.202.39/32",
-	'iface': "eth1",
+	"dns": "${DNS_SERVER}",
+	"victims": "${VICTIMS}",
+	'iface': "${IFACE}",
 	'wspid': 0
 }
 

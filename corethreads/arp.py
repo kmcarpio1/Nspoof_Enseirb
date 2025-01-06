@@ -8,7 +8,7 @@ import ipaddress
 
 def arp(stopEvent):
 
-	print("[ARRETE] Man-In-The-Middle ARP")
+	print("[DEMARRE] Man-In-The-Middle ARP")
 
 	# Get self ethernet address
 	self_mac = get_if_hwaddr(str(ATTACK_STATUS['iface']))

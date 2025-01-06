@@ -8,10 +8,26 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 from corethreads.coremanager import manager
 
+def erase_files():
+
+    nspoof_location = ENV['nspoof_location']
+    webserver_location = ENV['webserver_location']
+    nginx_manifests = ENV['nginx_manifests']
+
+    subprocess.call("(sudo rm -rf " + os.path.join(nginx_manifests, 'nspoof*') + ")", shell=True)
+    subprocess.call("(sudo rm -rf " + os.path.join(webserver_location, 'nspoof*') + ")", shell=True)
+    subprocess.call("(sudo rm -rf " + os.path.join(nspoof_location, 'tmp') + ")", shell=True)
+    subprocess.call("(sudo rm -rf " + os.path.join(nspoof_location, 'environment.py') + ")", shell=True)
+    subprocess.call("(sudo rm -rf " + os.path.join(nginx_manifests, 'nspoof*') + ")", shell=True)
+    subprocess.call("(sudo rm -rf " + os.path.join(webserver_location, 'nspoof*') + ")", shell=True)
+
+    return
+
 def exit_command(params):
 
     if not manager.startEvent.is_set():
         print("Attaque non démarrée")
+        erase_files()
         sys.exit()
         return
 
@@ -29,11 +45,7 @@ def exit_command(params):
         manager.thread3.join();
     print("[ARRETE] Sniffeur autres paquets")
 
-    print('4')
-    subprocess.run(['rm', '-rf', ENV['webserver_location'] + "/nspoof*"], check=True);
-    subprocess.run(['rm', '-rf', ENV['nginx_manifests'] + "/nspoof*"], check=True);
-    subprocess.run(['rm', '-rf', ENV['nspoof_location'] + "/credentials/*"], check=True);
-    subprocess.run(['rm', '-rf', ENV['nspoof_location'] + "/tmp"], check=True);
+    erase_files()
 
     print("[OK] Suppression des fichiers")
     print("[OK] Arrêt du programme")

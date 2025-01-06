@@ -1,5 +1,6 @@
 commands/__pycache__
-environment/__pycache__/
+environment/__pycache__
+__pycache__
 credentials/*
 history/*
-python3-nspoof/
+python3-nspoof

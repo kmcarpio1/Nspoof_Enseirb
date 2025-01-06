@@ -2,9 +2,9 @@
 
 echo ""
 
-echo -e "------------------------------------------------"
-echo -e "        Welcome to NSPOOF conf assistant        "
-echo -e "------------------------------------------------"
+echo -e "------------------------------------------------------------------------------------------------"
+echo -e "                                Welcome to NSPOOF conf assistant                                "
+echo -e "------------------------------------------------------------------------------------------------"
 
 echo -e "-- Test de la configuration --"
 
@@ -87,6 +87,7 @@ echo "[FAIT] Désactivation forwarding"
 echo -e ""
 
 echo -e "-- Configuration --"
+echo -e "-- Next time, precise --skip flag if you want to keep default values and skip configuration --"
 
 while true; do
 
@@ -94,8 +95,22 @@ while true; do
         rm -rf "environment.py"
     fi
 
-    read -p "Emplacements des manifests NGINX [vide = /etc/nginx/sites-enabled] : " manifests
-    read -p "Emplacements des sites web NGINX [vide = /var/www                ] : " websites
+    skip=false
+
+    for arg in "$@"; do
+        if [ "$arg" == "--skip" ]; then
+            skip=true
+            break
+        fi
+    done
+
+    if ! $skip; then
+        read -p "Emplacements des manifests NGINX [vide = /etc/nginx/sites-enabled] : " manifests
+        read -p "Emplacements des sites web NGINX [vide = /var/www                ] : " websites
+        read -p "IP des serveurs DNS              [vide= 192.168.0.254            ] : " dns_server
+        read -p "IP des victimes                  [vide= 192.168.0.0/24           ] : " victims
+        read -p "Interface                        [vide= eth0                     ] : " iface
+    fi
 
     if [ -z "$manifests" ]; then
         manifests="/etc/nginx/sites-enabled"
@@ -105,9 +120,21 @@ while true; do
         websites="/var/www"
     fi
 
+    if [ -z "$dns_server" ]; then
+        dns_server="192.168.0.254"
+    fi
+
+    if [ -z "$victims" ]; then
+        victims="192.168.0.0/24"
+    fi
+
+    if [ -z "$iface" ]; then
+        iface="eth0"
+    fi
+
     SCRIPT_DIR=$(dirname "$(realpath "$BASH_SOURCE")")
 
-    NGINX_MANIFESTS="$manifests" WEBSERVER_FILES_LOCATION="$websites" NSPOOF_LOCATION="$SCRIPT_DIR" envsubst < environment-template.py > environment.py
+    NGINX_MANIFESTS="$manifests" WEBSERVER_FILES_LOCATION="$websites" NSPOOF_LOCATION="$SCRIPT_DIR" DNS_SERVER="$dns_server" VICTIMS="$victims" IFACE="$iface" envsubst < environment-template.py > environment.py
 
     if [ -d "$manifests" ]; then
         break
@@ -125,21 +152,16 @@ done
 
 echo -e "[STATUS] Configuration terminée ! Nspoof est prêt à être utilisé !\n"
 
-echo -e "-----------------------------------------"
-echo -e "              Avertissement              "
-echo -e "-----------------------------------------\n"
+echo -e "----------------------------------------------------------------------------------"
+echo -e "                                   Avertissement                                  "
+echo -e "----------------------------------------------------------------------------------\n"
 
-echo -e "Cet outil est destiné uniquement à
-être utilisé sur des systèmes et des
-infrastructures que vous possédez ou
-pour lesquels vous avez une autorisation
-explicite de tester. Toute utilisation
-non autorisée sur des réseaux ou des
-systèmes sans consentement est illégale
-et peut entraîner de graves conséquences.
-Les développeurs et distributeurs de cet
-outil ne cautionnent ni ne soutiennent les
-activités illégales.\n"
-echo -e "-----------------------------------------\n"
+echo -e "Cet outil est destiné uniquement à être utilisé sur des systèmes et des
+infrastructures que vous possédez ou pour lesquels vous avez une autorisation
+explicite de tester. Toute utilisation non autorisée sur des réseaux ou des
+systèmes sans consentement est illégale et peut entraîner de graves conséquences.
+Les développeurs et distributeurs de cet outil ne cautionnent ni ne soutiennent les
+activités illégales."
+echo -e "----------------------------------------------------------------------------------\n"
 
 python3 nspoof.py

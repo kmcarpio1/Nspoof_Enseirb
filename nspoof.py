@@ -12,13 +12,11 @@ from commands.exit_command import exit_command
 from commands.start_command import start_command
 from commands.show_creds_command import show_creds_command
 from commands.show_history_command import show_history_command
-from commands.set_dns_command import set_dns_command
-from commands.set_victims_command import set_victims_command
-from commands.set_iface_command import set_iface_command
 from commands.add_site_command import add_site_command
 from commands.rem_site_command import rem_site_command
 from commands.dis_site_command import dis_site_command
 from commands.ena_site_command import ena_site_command
+from commands.clear_all_command import clear_all_command
 from commands.add_domain_to_site_command import add_domain_to_site_command
 from commands.rem_domain_to_site_command import rem_domain_to_site_command
 from environment import ENV
@@ -31,15 +29,13 @@ def register_commands():
     COMMANDS['help'] = help_command
     COMMANDS['exit'] = exit_command
     COMMANDS['start'] = start_command
-    COMMANDS['set_dns'] = set_dns_command
-    COMMANDS['set_victims'] = set_victims_command
-    COMMANDS['set_iface'] = set_iface_command
     COMMANDS['show_creds'] = show_creds_command
     COMMANDS['show_history'] = show_history_command
     COMMANDS['add_site'] = add_site_command
     COMMANDS['rem_site'] = rem_site_command
     COMMANDS['dis_site'] = dis_site_command
     COMMANDS['ena_site'] = ena_site_command
+    COMMANDS['clear_all'] = clear_all_command
     COMMANDS['add_domain_to_site'] = add_domain_to_site_command
     COMMANDS['rem_domain_to_site'] = rem_domain_to_site_command
     COMMANDS['exit'] = exit_command
