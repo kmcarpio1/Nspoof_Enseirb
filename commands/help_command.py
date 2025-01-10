@@ -13,6 +13,7 @@ def help_command(params):
         ["clear_all", "Supprime tous les fichiers historique et identifiants (! ATTENTION !)"],
         ["add_domain_to_site domain1 [other domains] site_id", "Ajouter un domaine à un site à usurper"],
         ["rem_domain_to_site domain1 [other_domains] site_id", "Supprimer un domaine à un site à usurper"],
+        ["zip absolute_path_to_file name_wanted", "Permet d'archiver un dossier sous forme de .tar.gz"],
         ["start", "Démarrer l'attaque"],
         ["exit", "Terminer l'attaque et le programme. Nettoie les fichiers"]
     ]
