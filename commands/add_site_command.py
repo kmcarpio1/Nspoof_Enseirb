@@ -21,7 +21,6 @@ def create_file(directory, filename, content):
 # Handler for adding a website to spoofed websites
 #
 def add_site_command(params):
-
 	# Check if attack status is pending or not
 	if ATTACK_STATUS['status'] != 0:
 		print("L'attaque est déja en cours.")
@@ -66,12 +65,9 @@ def add_site_command(params):
 
 	# Extraction of tarfile
 	try:
-		# Construire le chemin de l'archive
 		tar_path = os.path.join(ENV['nspoof_location'], "web-templates", params[-2] + ".tar.gz")
-		# Créer un sous-dossier dans tmpdir avec le nom de l'archive
 		root_folder = os.path.join(tmpdir, params[-2])  # Nom de l'archive sans .tar.gz
 		os.makedirs(root_folder, exist_ok=True)
-		# Ouvrir et extraire l'archive dans le dossier racine
 		with tarfile.open(tar_path, 'r:gz') as tar:
 			tar.extractall(path=root_folder)
 	except:
