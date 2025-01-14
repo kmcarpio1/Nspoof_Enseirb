@@ -8,6 +8,9 @@ from environment import *
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
 from renew_config_file import renew_config_file
 
+#
+# Function for creating file
+#
 def create_file(directory, filename, content):
     if not os.path.exists(directory):
         os.makedirs(directory)
@@ -21,20 +24,24 @@ def create_file(directory, filename, content):
 # Handler for adding a website to spoofed websites
 #
 def add_site_command(params):
+
 	# Check if attack status is pending or not
 	if ATTACK_STATUS['status'] != 0:
 		print("L'attaque est déja en cours.")
 		return
 	
+	# Check for parameters
 	if len(params) < 3:
 		print("Vous devez spécifier au moins un domaine, un le chemin d'un fichier ZIP contenant les fichiers du site à usurper, et l'activation du HTTPS.")
 		return
 
+	# Check for length of websites
 	if len(WEBSITES) == 0:
 		idd = 1
 	else:
 		idd = WEBSITES[-1][0] + 1
 
+	# Get domains
 	domains = params[:-2]
 
 	# Recreation of folder

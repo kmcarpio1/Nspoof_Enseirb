@@ -12,7 +12,7 @@ def add_domain_to_site_command(params):
 
 	# Manage errors on parameters
 	if len(params) < 2:
-		print("Vous devez spécifier au moins un domaine et un identifiant de site")
+		print("You must specify a domain and a website identifier.")
 		return
 
 	# Get the domain list
@@ -22,7 +22,7 @@ def add_domain_to_site_command(params):
 	try:
 		WEBSITES[int(params[-1]) - 1][1].extend(domains)
 	except IndexError:
-		print("Le site n'existe pas.")
+		print("The website does not exist")
 
 	# Renew nginx configuration
 	renew_config_file(WEBSITES[int(params[-1]) - 1][1], WEBSITES[int(params[-1]) - 1][0], WEBSITES[int(params[-1]) - 1][6])

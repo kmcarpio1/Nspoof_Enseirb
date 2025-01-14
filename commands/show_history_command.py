@@ -5,10 +5,29 @@ from environment import *
 from tabulate import tabulate
 from termcolor import colored
 
+#
+# Show history
+#
 def show_history_command(params): 
 
+    if len(params) == 0:
+
+        print("Specify an IP :")
+
+        folder_path = os.path.join(ENV['nspoof_location'], "history")
+        files = os.listdir(folder_path)
+        dt = []
+        for file in files:
+            if file != ".gitkeep":
+                dt.append([file])
+
+        headers = ["Available history sheets :"]
+        print(tabulate(dt, headers, tablefmt="grid"))
+
+        return
+
     if len(params) != 1:
-        print("Erreur d'usage. Tapez help pour de l'aide")
+        print("Usage error. Type help.")
         return
 
     ip = str(params[0])
@@ -17,7 +36,7 @@ def show_history_command(params):
 
     # Vérifiez si le fichier existe
     if not os.path.exists(file_path):
-        print("Aucune entrée d'historique pour " + ip);
+        print("No history sheet for " + ip);
         return
     
     data = []
@@ -30,7 +49,7 @@ def show_history_command(params):
                 date, site = line.split('|||')
                 data.append([colored(date, "cyan"), colored(site, 'green')])
 
-    headers = [colored("Date et Heure", "red"), colored("Site visité", 'red')]
+    headers = [colored("Date and time", "red"), colored("Visited website", 'red')]
 
-    print("Historique de navgation récupéré pour " + colored(ip, "cyan"))
+    print("History of " + colored(ip, "cyan"))
     print(tabulate(data, headers, tablefmt="grid"))
