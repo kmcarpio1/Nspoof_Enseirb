@@ -152,16 +152,14 @@ done
 
 echo -e "[STATUS] Configuration terminée ! Nspoof est prêt à être utilisé !\n"
 
-echo -e "----------------------------------------------------------------------------------"
-echo -e "                                   Avertissement                                  "
-echo -e "----------------------------------------------------------------------------------\n"
+echo -e "------------------------------------------------------------------------------------------------"
+echo -e "                                           Avertissement                                        "
+echo -e "------------------------------------------------------------------------------------------------\n"
 
-echo -e "Cet outil est destiné uniquement à être utilisé sur des systèmes et des
-infrastructures que vous possédez ou pour lesquels vous avez une autorisation
-explicite de tester. Toute utilisation non autorisée sur des réseaux ou des
-systèmes sans consentement est illégale et peut entraîner de graves conséquences.
-Les développeurs et distributeurs de cet outil ne cautionnent ni ne soutiennent les
-activités illégales."
-echo -e "----------------------------------------------------------------------------------\n"
+echo -e "Cet outil est destiné uniquement à être utilisé sur des systèmes et des infrastructures que vous
+possédez ou pour lesquels vous avez une autorisation explicite de tester. Toute utilisation non autorisée
+sur des réseaux ou des systèmes sans consentement est illégale et peut entraîner de graves conséquences.
+Les développeurs et distributeurs de cet outil ne cautionnent ni ne soutiennent les activités illégales."
+echo -e "------------------------------------------------------------------------------------------------\n"
 
 python3 nspoof.py
