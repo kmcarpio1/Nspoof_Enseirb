@@ -8,12 +8,15 @@ from termcolor import colored
 def show_creds_command(params): 
 
     if len(params) != 1:
-        print("Erreur d'usage. Tapez help pour de l'aide")
+        print("Erreur d'usage. Tapez help pour de l'aide.")
         return
 
-    index = int(params[0]) + 1
+    index = int(params[0]) - 1
 
-    headers = [colored("username", "cyan"), colored("password", 'cyan')]
+    if 0 <= index < len(WEBSITES):
 
-    print("Identifiants récupérés depuis le domaine " + colored("facebook.com", "cyan"))
-    print(tabulate(CREDS[0], headers, tablefmt="grid"))
+        print("Identifiants récupérés depuis le domaine " + colored(WEBSITES[index][1], "cyan"))
+
+    else:
+        print("Erreur. Le site n'existe pas.")
+        return

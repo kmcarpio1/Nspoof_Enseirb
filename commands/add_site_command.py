@@ -52,7 +52,7 @@ def add_site_command(params):
 	# Recreation of temp folder
 	try:
 
-		tmpdir = ENV['tmp_location']
+		tmpdir = ENV['nspoof_location'] + "/tmp"
 
 		if os.path.exists(tmpdir):
 			shutil.rmtree(tmpdir)

@@ -17,7 +17,7 @@ def erase_files():
     subprocess.call("(sudo rm -rf " + os.path.join(nginx_manifests, 'nspoof*') + ")", shell=True)
     subprocess.call("(sudo rm -rf " + os.path.join(webserver_location, 'nspoof*') + ")", shell=True)
     subprocess.call("(sudo rm -rf " + os.path.join(nspoof_location, 'tmp') + ")", shell=True)
-    subprocess.call("(sudo rm -rf " + os.path.join(nspoof_location, 'environment.py') + ")", shell=True)
+    #subprocess.call("(sudo rm -rf " + os.path.join(nspoof_location, 'environment.py') + ")", shell=True)
     subprocess.call("(sudo rm -rf " + os.path.join(nginx_manifests, 'nspoof*') + ")", shell=True)
     subprocess.call("(sudo rm -rf " + os.path.join(webserver_location, 'nspoof*') + ")", shell=True)
 
