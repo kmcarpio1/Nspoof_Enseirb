@@ -6,6 +6,11 @@ from environment import *
 from mac_management import *
 import ipaddress
 
+
+
+#
+# Handler of the Man-In-The-Middle, by saturating the network with ARP requests.
+#
 def arp(stopEvent):
 
 	print("[DEMARRE] Man-In-The-Middle ARP")

@@ -4,6 +4,9 @@ from corethreads.dns_listen import dns_sniffer
 from corethreads.arptable import arptable
 from corethreads.other_listen import other_sniffer
 
+#
+# Handler of the different threads to launch.
+#
 class ThreadManager:
 
     def __init__(self):

@@ -6,7 +6,7 @@ from environment import *
 from renew_config_file import renew_config_file
 
 #
-# Handler for adding a domain(s) to a website
+# Handler for adding a domain(s) to a website.
 #
 def add_domain_to_site_command(params):
 

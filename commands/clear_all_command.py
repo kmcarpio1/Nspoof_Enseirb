@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 
 #
-# Handler for clearing history and credentials
+# Handler for clearing history and credentials.
 #
 def clear_all_command(params):
 

@@ -7,6 +7,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 from mac_management import *
 
+#
+# Function forwarding any package, changing the mac adress of the package. It replace the automatic forwarding that should bu disable when this program is running.
+#
 def forwarder(pkt):
     if pkt[IP] and pkt[Ether]:
         self_mac = get_if_hwaddr(str(ATTACK_STATUS['iface']))

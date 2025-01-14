@@ -8,23 +8,34 @@ import subprocess
 from corethreads.coremanager import manager
 from corethreads.arptable import arptable
 
+
+#
+# Handler to start the attack.
+#
 def start_command(params):
 
-	if ATTACK_STATUS['status'] == 0 and ATTACK_STATUS['wspid'] == 0:
+    # Check if no attack is currently running and no process is assigned
+    if ATTACK_STATUS['status'] == 0 and ATTACK_STATUS['wspid'] == 0:
 
-		ATTACK_STATUS['status'] = 1
+        # Set attack status to "in progress"
+        ATTACK_STATUS['status'] = 1
 
-		thread0 = threading.Thread(target=arptable)
-		thread0.start()
-		thread0.join()
+        # Start a thread for the ARP table function
+        thread0 = threading.Thread(target=arptable)
+        thread0.start()
+        # Wait for the ARP table thread to complete
+        thread0.join()
 
-		manager.start_threads()
+        # Start additional threads managed by a manager
+        manager.start_threads()
 
-		process = subprocess.Popen(["python3", "corethreads/credentials_catcher.py"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-		ATTACK_STATUS['wspid'] = process.pid
+        # Launch the credentials catcher script in a new process
+        process = subprocess.Popen(["python3", "corethreads/credentials_catcher.py"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # Store the process ID of the credentials catcher
+        ATTACK_STATUS['wspid'] = process.pid
 
-		return
+        return
 
-	else:
-
-		print("Attaque déja démarrée");
+    else:
+        # If the attack is already in progress, notify the user
+        print("Attack already started")
