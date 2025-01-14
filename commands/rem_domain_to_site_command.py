@@ -28,5 +28,5 @@ def rem_domain_to_site_command(params):
         return
 
     # Update the configuration file for the modified site
-        renew_config_file(WEBSITES[int(params[-1]) - 1][1], WEBSITES[int(params[-1]) - 1][0], WEBSITES[int(params[-1]) - 1][6])
+    renew_config_file(WEBSITES[int(params[-1]) - 1][1], WEBSITES[int(params[-1]) - 1][0], WEBSITES[int(params[-1]) - 1][6])
     return
