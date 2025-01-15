@@ -25,6 +25,9 @@ def renew_config_file(domains, idd, https):
     content = content.replace("{{DOMAINS}}", ", ".join(map(str, domains)))
     content = content.replace("{{WEBSITE_ID}}", str(idd))
 
+    content = content.replace("{{CERTIFICATE}}", ENV["certificates_location"] + "/nspoof/" + str(domains[0]) + "/public.pem")
+    content = content.replace("{{KEY}}", ENV["certificates_location"] + "/nspoof/" + str(domains[0]) + "/private.pem")
+
     with open(copied, 'w') as file:
         file.write(content)
 

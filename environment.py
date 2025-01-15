@@ -13,7 +13,8 @@ ATTACK_STATUS = {
 ENV = {
 	"nginx_manifests": "/etc/nginx/sites-enabled",
 	"webserver_location": "/var/www",
-	"nspoof_location": "/home/paul/Documents/nspoof"
+	"nspoof_location": "/home/paul/Documents/nspoof",
+	"certificates_location": "/etc/ssl/certs"
 }
 
 WEBSITES = []

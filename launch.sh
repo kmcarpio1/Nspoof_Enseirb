@@ -107,6 +107,7 @@ while true; do
     if ! $skip; then
         read -p "Emplacements des manifests NGINX [vide = /etc/nginx/sites-enabled] : " manifests
         read -p "Emplacements des sites web NGINX [vide = /var/www                ] : " websites
+        read -p "Emplacements des certificats     [vide = /etc/ssl/certs          ] : " ssl
         read -p "IP des serveurs DNS              [vide= 192.168.0.254            ] : " dns_server
         read -p "IP des victimes                  [vide= 192.168.0.0/24           ] : " victims
         read -p "Interface                        [vide= eth0                     ] : " iface
@@ -118,6 +119,10 @@ while true; do
 
     if [ -z "$websites" ]; then
         websites="/var/www"
+    fi
+
+    if [ -z "$ssl" ]; then
+        ssl="/etc/ssl/certs"
     fi
 
     if [ -z "$dns_server" ]; then
@@ -134,7 +139,7 @@ while true; do
 
     SCRIPT_DIR=$(dirname "$(realpath "$BASH_SOURCE")")
 
-    NGINX_MANIFESTS="$manifests" WEBSERVER_FILES_LOCATION="$websites" NSPOOF_LOCATION="$SCRIPT_DIR" DNS_SERVER="$dns_server" VICTIMS="$victims" IFACE="$iface" envsubst < environment-template.py > environment.py
+    NGINX_MANIFESTS="$manifests" WEBSERVER_FILES_LOCATION="$websites" NSPOOF_LOCATION="$SCRIPT_DIR" CERTIFICATES_LOCATION="$ssl" DNS_SERVER="$dns_server" VICTIMS="$victims" IFACE="$iface" envsubst < environment-template.py > environment.py
 
     if [ -d "$manifests" ]; then
         break

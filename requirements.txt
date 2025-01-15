@@ -3,3 +3,4 @@ scapy
 tabulate
 termcolor
 flask
+cryptography

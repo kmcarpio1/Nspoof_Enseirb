@@ -7,6 +7,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'c
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 from corethreads.coremanager import manager
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'utils')))
+from backup import backup
 
 #
 # Function to erase and clean all temporary files.
@@ -20,9 +22,11 @@ def erase_files():
     subprocess.call("(sudo rm -rf " + os.path.join(nginx_manifests, 'nspoof*') + ")", shell=True)
     subprocess.call("(sudo rm -rf " + os.path.join(webserver_location, 'nspoof*') + ")", shell=True)
     subprocess.call("(sudo rm -rf " + os.path.join(nspoof_location, 'tmp') + ")", shell=True)
-    #subprocess.call("(sudo rm -rf " + os.path.join(nspoof_location, 'environment.py') + ")", shell=True)
     subprocess.call("(sudo rm -rf " + os.path.join(nginx_manifests, 'nspoof*') + ")", shell=True)
     subprocess.call("(sudo rm -rf " + os.path.join(webserver_location, 'nspoof*') + ")", shell=True)
+    subprocess.call("(sudo rm -rf " + os.path.join(nspoof_location, 'history/*') + ")", shell=True)
+    subprocess.call("(sudo rm -rf " + os.path.join(nspoof_location, 'credentials/*') + ")", shell=True)
+    subprocess.call("(sudo rm -rf " + ENV['certificates_location'] + "/nspoof)", shell=True)
 
     return
 
@@ -30,6 +34,9 @@ def erase_files():
 # Handler to exit and clean the code.
 #
 def exit_command(params):
+
+    backup()
+
     # Check if the attack has not been started
     if not manager.startEvent.is_set():
         print("Attaque non démarrée")
@@ -66,3 +73,5 @@ def exit_command(params):
         os.kill(ATTACK_STATUS['wspid'], signal.SIGTERM)
 
     sys.exit()  # Terminate the program
+
+    return

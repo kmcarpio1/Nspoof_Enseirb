@@ -13,7 +13,8 @@ ATTACK_STATUS = {
 ENV = {
 	"nginx_manifests": "${NGINX_MANIFESTS}",
 	"webserver_location": "${WEBSERVER_FILES_LOCATION}",
-	"nspoof_location": "${NSPOOF_LOCATION}"
+	"nspoof_location": "${NSPOOF_LOCATION}",
+	"certificates_location": "${CERTIFICATES_LOCATION}"
 }
 
 WEBSITES = []
