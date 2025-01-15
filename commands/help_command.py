@@ -1,5 +1,9 @@
 from tabulate import tabulate
 
+
+#
+# Handler to display the helps and instructions for all commands.
+#
 def help_command(params):
 
     data = [

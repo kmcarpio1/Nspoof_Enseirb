@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'u
 from renew_config_file import renew_config_file
 
 #
-# Function for creating file
+# Function for creating file.
 #
 def create_file(directory, filename, content):
     if not os.path.exists(directory):
@@ -21,7 +21,7 @@ def create_file(directory, filename, content):
         file.write(content)
 
 #
-# Handler for adding a website to spoofed websites
+# Handler for adding a website to spoofed websites.
 #
 def add_site_command(params):
 

@@ -7,12 +7,18 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 from forwarder import *
 
+#
+# Function launching the forwarding function in another thread.
+#
 def launch_forward(pkt, self_mac):
     if(pkt[Ether].dst == self_mac):
         # Démarrage d'un thread pour forwarder avec pkt
         thread = threading.Thread(target=forwarder, args=(pkt,))
         thread.start()
 
+#
+# Function starting sniffing all the request in the network that are not DNS requests/responses.
+#
 def other_sniffer(stopEvent):
 
     def stop_sniffer(pkt):

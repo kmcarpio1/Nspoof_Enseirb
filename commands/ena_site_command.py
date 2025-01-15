@@ -3,6 +3,9 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 
+#
+# Handler to temporary enable a website.
+#
 def ena_site_command(params):
 
 	if len(params) != 1:

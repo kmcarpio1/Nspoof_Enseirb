@@ -2,6 +2,10 @@ import os
 import tarfile
 import shutil
 
+
+#
+# Handler to zip a file (ment to be used as a fake website later).s
+#
 def zip_command(params):  # params: [file_path, name_zip]
  
     if len(params) == 2:
