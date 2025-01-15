@@ -22,7 +22,6 @@ def backup():
     # Récupère tous les fichiers .txt directement dans history et credentials
     all_files = []
     for directory in [history_dir, credentials_dir]:
-        print(directory)
         if os.path.exists(directory):
             all_files.extend(
                 os.path.join(directory, file) for file in os.listdir(directory)

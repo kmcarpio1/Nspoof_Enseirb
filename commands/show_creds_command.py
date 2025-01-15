@@ -33,7 +33,7 @@ def show_creds_command(params):
         print("Caught credentials from domain(s) " + colored(WEBSITES[index][1], "cyan"))
 
         # Construct the file path where the credentials are stored
-        file_path = os.path.join(ENV['nspoof_location'] + "/credentials", f"{index+1}")
+        file_path = os.path.join(ENV['nspoof_location'] + "/credentials", f"{str(index+1)}")
 
         # Open and read the credentials file
         with open(file_path, 'r', encoding='utf-8') as file:

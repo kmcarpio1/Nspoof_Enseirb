@@ -93,14 +93,16 @@ def add_site_command(params):
 
 	if int(params[-1]) == 1:
 
+		success = False
+
 		if len(domains) != 1:
 			print("Error : You have to specify just one domain to generate a secure website.")
 			return;
 
 		success = renew_ssl_certs(domains[0])
 
-	if not success:
-		return
+		if not success:
+			return
 
 	renew_config_file(domains, idd, int(params[-1]))
 
