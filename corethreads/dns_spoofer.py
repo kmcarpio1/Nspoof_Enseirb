@@ -25,7 +25,7 @@ def dns_sorting_start(pkt):
 # The function returns True if the credentials haven't been collected yet, False if they had.
 #
 def check_if_not_already_spoofed(ip, website):
-    path = ENV[nspoof_location]+"creadentials/"+website[0]
+    path = ENV['nspoof_location'] + "/credentials/"+ str(website[0]+1)
     try : 
         with open(path, 'r', encoding='utf-8') as cred_file:
             content = cred_file.read()
@@ -33,6 +33,7 @@ def check_if_not_already_spoofed(ip, website):
                 return False
             else:
                 return True
+        print('ok')
     except FileNotFoundError:
         return True
 
