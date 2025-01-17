@@ -14,8 +14,6 @@ from commands.show_creds_command import show_creds_command
 from commands.show_history_command import show_history_command
 from commands.add_site_command import add_site_command
 from commands.rem_site_command import rem_site_command
-from commands.dis_site_command import dis_site_command
-from commands.ena_site_command import ena_site_command
 from commands.zip_command import zip_command
 from commands.gen_ca_command import gen_ca_command
 from commands.add_domain_to_site_command import add_domain_to_site_command

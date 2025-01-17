@@ -13,10 +13,7 @@ from history import *
 # Function checking if the pckage has IP and DNS layer.
 #
 def dns_sorting_start(pkt):
-
-    dns= 
-    victims = 
-
+    
     network = ipaddress.ip_network(ATTACK_STATUS['victims'], strict=False)
 
     if pkt.haslayer(IP) and pkt.haslayer(DNS): #check if there is an IP and DNS layer

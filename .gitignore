@@ -5,3 +5,5 @@ credentials/*
 history/*
 backup/*
 python3-nspoof
+*.pem
+corethreads/__pycache__

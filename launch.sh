@@ -84,8 +84,8 @@ sudo sysctl -w net.ipv6.conf.default.forwarding=0 > /dev/null 2>&1
 sudo sysctl -w net.ipv4.ip_forward=0 > /dev/null 2>&1
 echo "[DONE] Forwarding desactivation"
 echo "[ALERT] PLEASE CHECK THAT FORWARD HAS BEEN DISACTIVATED -- SOMETIMES PROGRAM CAN'T DO THIS AUTOMATICALLY"
-echo "Will pause 2 seconds ..."
-sleep(2)
+echo "Will pause 3 seconds ..."
+
 echo -e ""
 
 echo -e "-- Configuration --"
