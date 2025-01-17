@@ -32,8 +32,6 @@ def register_commands():
     COMMANDS['show_history'] = show_history_command
     COMMANDS['add_site'] = add_site_command
     COMMANDS['rem_site'] = rem_site_command
-    COMMANDS['dis_site'] = dis_site_command
-    COMMANDS['ena_site'] = ena_site_command
     COMMANDS['add_domain_to_site'] = add_domain_to_site_command
     COMMANDS['zip'] = zip_command
     COMMANDS['gen_ca'] = gen_ca_command
