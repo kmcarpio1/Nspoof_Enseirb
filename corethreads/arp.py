@@ -13,13 +13,13 @@ import ipaddress
 #
 def arp(stopEvent):
 
-	print("[DEMARRE] Man-In-The-Middle ARP")
+	print("[STARTED] Man-In-The-Middle ARP")
 
 	# Get self ethernet address
 	self_mac = get_if_hwaddr(str(ATTACK_STATUS['iface']))
 
 	if not self_mac:
-		print("Self mac not founded - aborting")
+		print("Error: Self mac not founded - aborting")
 		return
 
 	#retrieving MAC address from DNS server
@@ -29,7 +29,7 @@ def arp(stopEvent):
 	if mac_dns[0]:
 		mac_dns = mac_dns[0][0][1].hwsrc
 	else:
-		print("[ERROR] ARP DNS non trouvée.")
+		print("[STARTED] ARP DNS not finded.")
 		return
 
 	# Parse subnet of victims

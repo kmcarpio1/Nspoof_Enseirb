@@ -17,30 +17,6 @@ call_catcher(json_encode($keys));
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 /**
@@ -90,7 +66,6 @@ function call_catcher($credentials) {
     curl_close($ch);
 
     redirect();
-    exit();
 
 }
 

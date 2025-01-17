@@ -10,6 +10,11 @@ from renew_config_file import renew_config_file
 #
 def add_domain_to_site_command(params):
 
+	# Check if attack status is pending or not
+	if ATTACK_STATUS['status'] != 0:
+		print("L'attaque est déja en cours.")
+		return
+
 	# Manage errors on parameters
 	if len(params) < 2:
 		print("You must specify a domain and a website identifier.")

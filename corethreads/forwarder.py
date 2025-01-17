@@ -11,6 +11,7 @@ from mac_management import *
 # Function forwarding any package, changing the mac adress of the package. It replace the automatic forwarding that should bu disable when this program is running.
 #
 def forwarder(pkt):
+
     if pkt[IP] and pkt[Ether]:
         self_mac = get_if_hwaddr(str(ATTACK_STATUS['iface']))
         pkt[Ether].src = pkt[Ether].dst #we replace the sender MAC with our
@@ -26,6 +27,3 @@ def forwarder(pkt):
                 sendp(pkt, verbose=False)
             except Exception as e:
                 pass
-        #    print("Forwarding package from" + str(pkt[IP].src) + " to " + str(pkt[IP].dst) )
-        #else:
-        #    print(f"Error: Unable to resolve MAC address for {str(pkt[IP].src)}")

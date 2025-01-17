@@ -32,7 +32,7 @@ def arprequest(ip):
 def arptable():
 
     # Print a message
-    print("[DEMARRE] Scanneur ARP")
+    print("[STARTED] ARP Scanner")
 
     # Parse subnet of victims
     victims = ipaddress.IPv4Network(ATTACK_STATUS['victims'], strict=False);
@@ -54,6 +54,6 @@ def arptable():
     for thread in threads:
         thread.join()
 
-    print("[TERMINE] Scanneur ARP")
+    print("[STOPPED] ARP Scanner")
 
     return

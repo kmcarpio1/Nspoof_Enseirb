@@ -14,17 +14,15 @@ from history import *
 #
 def dns_sorting_start(pkt):
 
-    websites = WEBSITES
+    dns= 
+    victims = 
 
-    dns= ATTACK_STATUS['dns']
-    victims = ATTACK_STATUS['victims']
-
-    network = ipaddress.ip_network(victims, strict=False)
+    network = ipaddress.ip_network(ATTACK_STATUS['victims'], strict=False)
 
     if pkt.haslayer(IP) and pkt.haslayer(DNS): #check if there is an IP and DNS layer
         src_ip = pkt[IP].src 
         dst_ip = pkt[IP].dst
-        dns_check(websites, dns, network, pkt, src_ip, dst_ip)
+        dns_check(WEBSITES, ATTACK_STATUS['dns'], network, pkt, src_ip, dst_ip)
 
 #
 # Function checking if the DNS request is part of the one we want to parasitize (checking IP_adress, the domain and website concerned).

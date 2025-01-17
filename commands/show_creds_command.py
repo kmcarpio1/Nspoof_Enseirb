@@ -14,8 +14,8 @@ def show_creds_command(params):
 
     # If no parameters are provided, prompt the user to specify a website ID
     if len(params) == 0:
-        print("Specify website id:")
-        list_command([])  # Call list_command to show available websites
+        print("Available creds tables :")
+        list_command(['only_creds'])  # Call list_command to show available websites
         return
 
     # Ensure that exactly one parameter is passed (website ID)

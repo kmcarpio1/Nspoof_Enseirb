@@ -5,20 +5,28 @@ import subprocess
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from environment import *
 
+#
+# Update the nginx configuration file with specified info for specified idd
+#
 def renew_config_file(domains, idd, https):
 
+    # Get NGINX manifests directory
     dst = ENV['nginx_manifests']
+
+    # Delete config file if it exists
 
     copied = os.path.join(dst, 'nspoof' + str(idd) + ".conf")
 
     if os.path.exists(copied):
         os.remove(copied)
     
+    # Template file depending on HTTPS activated or not
     if https == 1:
         shutil.copy(ENV['nspoof_location'] + '/nginx_templates/nginx.https.conf', copied)
     else:
         shutil.copy(ENV['nspoof_location'] + '/nginx_templates/nginx.http.conf', copied)
 
+    # Update 
     with open(copied, 'r') as file:
         content = file.read()
 
@@ -31,5 +39,6 @@ def renew_config_file(domains, idd, https):
     with open(copied, 'w') as file:
         file.write(content)
 
+    # Restart nginx
     subprocess.run(['sudo', 'systemctl', 'restart', 'nginx'], check=True)
     return

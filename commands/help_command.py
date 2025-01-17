@@ -6,22 +6,23 @@ from tabulate import tabulate
 #
 def help_command(params):
 
+    # Build an array with messages
     data = [
-        ["help", "Affiche les commandes disponibles"],
-        ["status", "Affiche le status de la configuration"],
-        ["list", "Affiche la liste des sites usurpés"],
-        ["add_site domain1 [other_domains] archive https", "Ajouter un site internet à usurper"],
-        ["rem_site site_id", "Supprimer un site internet à usurper"],
-        ["dis_site site_id", "Désactiver temporairement un site"],
-        ["ena_site site_id", "Réactiver un site"],
-        ["add_domain_to_site domain1 [other domains] site_id", "Ajouter un domaine à un site à usurper"],
-        ["rem_domain_to_site domain1 [other_domains] site_id", "Supprimer un domaine à un site à usurper"],
-        ["zip absolute_path_to_file name_wanted", "Permet d'archiver un dossier sous forme de .tar.gz"],
-        ["gen_ca", "Generate a certification authority to generate certificates"],
-        ["show_history", "Show an history of visited domains"],
-        ["show_creds", "Show credentials catched."],
-        ["start", "Démarrer l'attaque"],
-        ["exit", "Terminer l'attaque et le programme. Nettoie les fichiers"]
+        ["help", "Displays the available commands"],
+        ["status", "Shows the configuration status"],
+        ["list", "Displays the list of spoofed sites"],
+        ["add_site domain1 [other_domains] archive https", "Adds a website to spoof"],
+        ["rem_site site_id", "Removes a website from spoofing"],
+        ["dis_site site_id", "Temporarily disables a site"],
+        ["ena_site site_id", "Re-enables a site"],
+        ["add_domain_to_site domain1 [other_domains] site_id", "Adds a domain to a site to spoof"],
+        ["rem_domain_to_site domain1 [other_domains] site_id", "Removes a domain from a site to spoof"],
+        ["zip absolute_path_to_file name_wanted", "Archives a folder as .tar.gz"],
+        ["gen_ca", "Generates a certification authority to create certificates"],
+        ["show_history", "Shows a history of visited domains"],
+        ["show_creds", "Displays captured credentials"],
+        ["start", "Starts the attack"],
+        ["exit", "Ends the attack and the program. Cleans up files"]
     ]
 
     headers = ["Commande", "Usage"]

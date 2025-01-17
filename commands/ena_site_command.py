@@ -8,6 +8,11 @@ from environment import *
 #
 def ena_site_command(params):
 
+	# Check if attack status is pending or not
+	if ATTACK_STATUS['status'] != 0:
+		print("L'attaque est déja en cours.")
+		return
+
 	if len(params) != 1:
 		print("Vous devez spécifier un site à activer.")
 		return

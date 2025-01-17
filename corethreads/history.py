@@ -15,7 +15,7 @@ def create_ip_file(folder_path,file_path):
             pass  # Create an empty file
 
 #
-# Functio, adding the domain name and the informations of an internet connection to the right file.
+# Function, adding the domain name and the informations of an internet connection to the right file.
 #
 def add_to_history(IP, domain_name):
     folder_path = "history"
