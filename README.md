@@ -4,7 +4,7 @@ tool to automate attacks by DNS usurpation - (c) Paul BARBARIN - MORENO CARPIO K
 Educative usage only -- Other usages could be illegal
 
 ## Before everything : READ DOCS !
-General documentation is available on the Gitlab Repo (tab Wiki).
+General documentation is available on the Github Repo (tab Wiki).
 Docs will also be sent in deliverables.
 
 ## Launch program
